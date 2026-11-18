@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -237,9 +238,9 @@ selectedProduct=products.find(p=>p.id===id);
 document.getElementById("option-name").textContent=selectedProduct.name;
 document.getElementById("option-price").textContent=selectedProduct.price+" DH";
 document.getElementById("size-select").innerHTML=
-selectedProduct.sizes.map(s=><option value="${s}">${s}</option>).join("");
+selectedProduct.sizes.map(s=>`<option value="${s}">${s}</option>`).join("");
 document.getElementById("color-select").innerHTML=
-selectedProduct.colors.map(c=><option value="${c}">${c}</option>).join("");
+selectedProduct.colors.map(c=>`<option value="${c}">${c}</option>`).join("");
 document.getElementById("quantity-select").value=1;
 openModal("product-modal");
 }
@@ -326,12 +327,12 @@ return;
 if(cart.length===0){alert("Your bag is empty.");return;}
 
 let total=0;
-let message="NEW OUTFITI ORDER%0A%0A";
+let message="*NEW OUTFITI ORDER*%0A%0A";
 message+="Name: "+encodeURIComponent(name)+"%0A";
 message+="Phone: "+encodeURIComponent(phone)+"%0A";
 message+="City: "+encodeURIComponent(city)+"%0A";
 message+="Address: "+encodeURIComponent(address)+"%0A%0A";
-message+="PRODUCTS%0A";
+message+="*PRODUCTS*%0A";
 
 cart.forEach(item=>{
 const line=item.name+" | Size: "+item.size+" | Color: "+item.color+" | Qty: "+item.quantity+" | "+(item.price*item.quantity)+" DH";
