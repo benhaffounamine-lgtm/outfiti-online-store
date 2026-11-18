@@ -1,364 +1,848 @@
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OUTFITI | Own Your Street</title>
-<meta name="description" content="OUTFITI - Streetwear fashion. Discover our latest collection in Morocco.">
+<title>OUTFITI | Beyond Fashion</title>
+<meta name="description" content="OUTFITI — Premium Streetwear from Kenitra, Morocco.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --black:#080808;
+  --panel:#111;
+  --white:#f5f3ee;
+  --silver:#c6c6c6;
+  --gold:#b9a17c;
+  --muted:#777;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,Helvetica,sans-serif;background:#f5f2eb;color:#111}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:Inter,Arial,sans-serif;
+  overflow-x:hidden;
+}
 a{text-decoration:none;color:inherit}
-button,input,select,textarea{font-family:inherit}
-button{cursor:pointer}
-.topbar{background:#111;color:white;text-align:center;padding:10px;font-size:11px;letter-spacing:2px}
-header{min-height:78px;padding:12px 6%;display:flex;align-items:center;justify-content:space-between;background:#f5f2eb;position:sticky;top:0;z-index:10;border-bottom:1px solid #ddd}
-.logo{font-size:35px;font-weight:1000;font-style:italic;letter-spacing:-3px}
-.logo span{font-size:10px;display:block;letter-spacing:5px;text-align:center;font-style:normal}
-nav{display:flex;gap:24px;font-size:12px;font-weight:bold}
-nav a:hover{opacity:.5}
-.cart{background:#111;color:white;padding:12px 17px;border:0;font-size:12px}
-#cart-count{margin-left:5px}
-.hero{min-height:570px;background:#171717;color:white;display:flex;align-items:center;padding:65px 9%;position:relative;overflow:hidden}
-.hero:after{content:"OUTFITI";position:absolute;font-size:clamp(100px,20vw,260px);font-weight:1000;color:#ffffff09;right:-20px;bottom:5px}
-.hero-content{position:relative;z-index:1;max-width:650px}
-.tag{font-size:11px;letter-spacing:5px;color:#c6b99f;margin-bottom:25px}
-.hero h1{font-size:clamp(55px,9vw,110px);line-height:.9;letter-spacing:-5px;font-weight:1000}
-.hero h1 span{color:#c6b99f}
-.hero p{margin:25px 0;color:#ccc;letter-spacing:2px;font-size:13px}
-.btn{display:inline-block;background:#f5f2eb;color:#111;padding:17px 30px;font-weight:bold;font-size:12px;letter-spacing:2px;border:0}
-.btn:hover{background:#c6b99f}
-.section{padding:75px 7%}
-.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:35px}
-.section-head h2{font-size:35px;letter-spacing:-1px}
-.section-head p{font-size:11px;letter-spacing:3px;color:#777}
-.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.category{background:#171717;color:white;padding:35px 15px;text-align:center;min-height:125px;display:flex;flex-direction:column;justify-content:center;gap:12px;transition:.2s}
-.category:hover{background:#b4a58a;color:#111;transform:translateY(-4px)}
-.category strong{font-size:17px}
-.category small{font-size:10px;letter-spacing:2px}
-.newdrop{background:#111;color:white;text-align:center;padding:65px 15px}
-.newdrop h2{font-size:clamp(35px,7vw,65px);letter-spacing:-2px;margin:12px 0}
-.newdrop p{font-size:12px;color:#bbb;letter-spacing:3px;margin-bottom:25px}
-.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.product{background:white;padding-bottom:18px}
-.product img{width:100%;height:280px;object-fit:cover;background:#ddd;display:block}
-.product-info{padding:16px 13px}
-.product-info h3{font-size:14px;margin-bottom:8px}
-.product-info p{font-size:13px;font-weight:bold}
-.product-info button{margin-top:13px;width:100%;background:#111;color:white;padding:12px;border:0;font-size:11px;letter-spacing:1px}
-.product-info button:hover{background:#8f8067}
-footer{background:#111;color:white;padding:55px 7% 25px}
-.footer-inner{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
-footer p{font-size:12px;color:#aaa;line-height:2;margin-top:12px}
-footer h3{font-size:24px;font-style:italic}
-.copyright{text-align:center;border-top:1px solid #444;margin-top:35px;padding-top:20px;color:#888;font-size:10px}
-.modal{display:none;position:fixed;inset:0;background:#000b;z-index:50;overflow-y:auto;padding:25px 12px}
-.modal.open{display:flex;align-items:flex-start;justify-content:center}
-.modal-box{background:#f5f2eb;width:100%;max-width:520px;padding:25px;margin:auto;position:relative}
-.modal-box h2{font-size:25px;margin:5px 0 20px}
-.close{position:absolute;right:18px;top:15px;border:0;background:none;font-size:27px}
-.field{margin:14px 0}
-.field label{display:block;font-size:11px;font-weight:bold;letter-spacing:1px;margin-bottom:7px}
-.field input,.field select,.field textarea{width:100%;padding:13px;border:1px solid #ccc;background:white;font-size:14px;border-radius:0}
-.field textarea{min-height:75px;resize:vertical}
-.action{width:100%;background:#111;color:white;border:0;padding:15px;font-size:12px;font-weight:bold;letter-spacing:1px;margin-top:12px}
-.action:hover{background:#8f8067}
-.secondary{background:#ddd;color:#111}
-.cart-line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #ccc;padding:14px 0;font-size:13px}
-.cart-line button{border:0;background:none;color:#a22;font-size:12px}
-.qty{display:flex;align-items:center;gap:9px;margin-top:8px}
-.qty button{background:#ddd;color:#111;padding:4px 9px;border:0}
-.total{display:flex;justify-content:space-between;font-weight:bold;font-size:18px;padding:18px 0}
-.empty{text-align:center;color:#777;padding:25px}
-.note{font-size:11px;color:#666;line-height:1.6;margin-top:10px}
-@media(max-width:750px){
-header{padding:12px 4%;flex-wrap:wrap}
-.logo{font-size:29px}
-nav{order:3;width:100%;overflow-x:auto;padding:13px 0;gap:20px}
-nav a{white-space:nowrap}
-.hero{min-height:480px;padding:55px 7%}
-.hero h1{letter-spacing:-3px}
-.section{padding:50px 5%}
-.categories{grid-template-columns:repeat(2,1fr)}
-.products{grid-template-columns:repeat(2,1fr);gap:10px}
-.product img{height:210px}
-.section-head h2{font-size:27px}
-.modal-box{padding:22px 17px}
+button{font-family:inherit;cursor:pointer}
+img{display:block;max-width:100%}
+
+/* TOPBAR */
+.topbar{
+  background:#d5d1c8;
+  color:#080808;
+  text-align:center;
+  padding:9px;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:3px;
+}
+
+/* HEADER */
+header{
+  height:85px;
+  padding:0 7%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#080808eF;
+  backdrop-filter:blur(15px);
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid #ffffff15;
+}
+.logo{
+  font-size:35px;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:-3px;
+}
+.logo span{
+  display:block;
+  text-align:center;
+  font-size:9px;
+  letter-spacing:6px;
+  font-style:normal;
+  color:var(--gold);
+}
+nav{display:flex;gap:32px}
+nav a{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:2px;
+  transition:.3s;
+}
+nav a:hover{color:var(--gold)}
+.cart-button{
+  background:var(--white);
+  color:#000;
+  padding:13px 20px;
+  border:0;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+/* HERO */
+.hero{
+  min-height:690px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  padding:80px 9%;
+  background:
+    linear-gradient(90deg,#050505 0%,#050505d9 45%,#05050525 100%),
+    url("https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=1800")
+    center/cover;
+  perspective:1000px;
+}
+.hero:before{
+  content:"";
+  position:absolute;
+  width:550px;height:550px;
+  right:5%;top:10%;
+  border:1px solid #ffffff12;
+  border-radius:50%;
+  box-shadow:0 0 100px #ffffff08,inset 0 0 100px #ffffff05;
+  animation:rotate 25s linear infinite;
+}
+.hero:after{
+  content:"OUTFITI";
+  position:absolute;
+  bottom:-65px;
+  right:-30px;
+  font-size:clamp(100px,22vw,300px);
+  font-weight:900;
+  letter-spacing:-15px;
+  color:#ffffff08;
+  pointer-events:none;
+}
+@keyframes rotate{to{transform:rotate(360deg)}}
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:700px;
+  transform-style:preserve-3d;
+  animation:enter 1.2s ease both;
+}
+@keyframes enter{
+  from{opacity:0;transform:translateY(50px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.eyebrow{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:6px;
+  margin-bottom:25px;
+}
+.hero h1{
+  font-size:clamp(65px,11vw,145px);
+  font-weight:900;
+  letter-spacing:-9px;
+  line-height:.82;
+}
+.hero h1 span{
+  display:block;
+  color:transparent;
+  -webkit-text-stroke:1px #d0c4af;
+  text-shadow:0 0 30px #ffffff12;
+}
+.hero-description{
+  margin:30px 0;
+  color:#aaa;
+  font-size:11px;
+  letter-spacing:4px;
+  line-height:2;
+}
+.btn{
+  display:inline-block;
+  background:var(--white);
+  color:#000;
+  border:1px solid var(--white);
+  padding:18px 32px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:3px;
+  transition:.35s;
+}
+.btn:hover{
+  background:transparent;
+  color:white;
+  transform:translateY(-4px);
+  box-shadow:0 10px 35px #ffffff20;
+}
+.hero-note{
+  margin-top:65px;
+  color:#777;
+  font-size:9px;
+  letter-spacing:3px;
+}
+
+/* MARQUEE */
+.marquee{
+  overflow:hidden;
+  white-space:nowrap;
+  background:#e5e0d6;
+  color:#090909;
+  padding:17px 0;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:5px;
+}
+.marquee div{
+  display:inline-block;
+  animation:marquee 24s linear infinite;
+}
+@keyframes marquee{
+  to{transform:translateX(-50%)}
+}
+
+/* GENERAL SECTIONS */
+.section{padding:100px 7%}
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-bottom:45px;
+}
+.section-head small{
+  color:var(--gold);
+  letter-spacing:4px;
+  font-size:9px;
+  font-weight:800;
+}
+.section-head h2{
+  font-size:clamp(32px,5vw,55px);
+  font-weight:900;
+  letter-spacing:-3px;
+  margin-top:12px;
+}
+.section-head p{
+  color:#777;
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+/* CATEGORIES */
+.categories{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.category{
+  min-height:175px;
+  background:
+    linear-gradient(145deg,#222,#090909);
+  border:1px solid #ffffff12;
+  display:flex;
+  align-items:end;
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+  transition:.5s;
+}
+.category:before{
+  content:"";
+  position:absolute;
+  width:130px;height:130px;
+  border:1px solid #ffffff12;
+  border-radius:50%;
+  right:-40px;top:-40px;
+  transition:.6s;
+}
+.category:hover{
+  background:#c1ad8d;
+  color:#080808;
+  transform:translateY(-8px);
+  box-shadow:0 20px 45px #000;
+}
+.category:hover:before{
+  transform:scale(2);
+}
+.category strong{
+  position:relative;
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+.category small{
+  position:absolute;
+  top:20px;left:22px;
+  font-size:9px;
+  letter-spacing:3px;
+  color:var(--gold);
+}
+.category:hover small{color:#222}
+
+/* NEW DROP */
+.drop{
+  min-height:400px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:60px 20px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(#000a,#000c),
+    url("https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600")
+    center/cover fixed;
+}
+.drop-content{position:relative;z-index:1}
+.drop h2{
+  font-size:clamp(55px,10vw,105px);
+  font-weight:900;
+  letter-spacing:-6px;
+  text-shadow:0 10px 50px #000;
+}
+.drop p{
+  color:#c4b69f;
+  font-size:10px;
+  letter-spacing:5px;
+  margin:15px 0 30px;
+}
+
+/* PRODUCTS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+.product{
+  background:#111;
+  border:1px solid #ffffff12;
+  position:relative;
+  overflow:hidden;
+  transition:transform .2s,border .3s,box-shadow .3s;
+  transform-style:preserve-3d;
+}
+.product:hover{
+  border-color:#b9a17c80;
+  box-shadow:0 20px 55px #000;
+}
+.product-image{
+  height:320px;
+  overflow:hidden;
+  position:relative;
+  background:#1c1c1c;
+}
+.product-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .7s;
+}
+.product:hover .product-image img{
+  transform:scale(1.09);
+}
+.product-label{
+  position:absolute;
+  top:15px;left:15px;
+  background:#d1c4ae;
+  color:#000;
+  padding:7px 10px;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+.product-info{padding:20px}
+.product-info h3{
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+.price{
+  color:var(--gold);
+  font-size:14px;
+  font-weight:900;
+}
+.add-button{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  background:transparent;
+  color:white;
+  border:1px solid #ffffff40;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:2px;
+  transition:.3s;
+}
+.add-button:hover{
+  background:var(--white);
+  color:#000;
+}
+
+/* BRAND MESSAGE */
+.brand-message{
+  background:#e8e3d9;
+  color:#090909;
+  text-align:center;
+  padding:100px 20px;
+}
+.brand-message small{
+  letter-spacing:5px;
+  font-size:10px;
+}
+.brand-message h2{
+  font-size:clamp(45px,9vw,95px);
+  font-weight:900;
+  letter-spacing:-6px;
+  margin:20px 0;
+}
+.brand-message p{
+  color:#555;
+  font-size:11px;
+  letter-spacing:3px;
+}
+
+/* FOOTER */
+footer{
+  background:#090909;
+  padding:65px 7% 25px;
+  border-top:1px solid #ffffff15;
+}
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:40px;
+}
+footer h3{
+  font-size:28px;
+  font-style:italic;
+  font-weight:900;
+}
+footer p{
+  color:#888;
+  font-size:11px;
+  line-height:2.3;
+  margin-top:15px;
+}
+.copyright{
+  text-align:center;
+  border-top:1px solid #ffffff18;
+  margin-top:45px;
+  padding-top:22px;
+  color:#666;
+  font-size:9px;
+  letter-spacing:2px;
+}
+
+/* CART DRAWER */
+.cart-overlay{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  z-index:200;
+  opacity:0;
+  visibility:hidden;
+  transition:.3s;
+}
+.cart-overlay.open{opacity:1;visibility:visible}
+.cart-drawer{
+  position:absolute;
+  right:0;top:0;
+  width:min(430px,100%);
+  height:100%;
+  background:#111;
+  padding:30px;
+  transform:translateX(100%);
+  transition:.4s;
+  display:flex;
+  flex-direction:column;
+}
+.cart-overlay.open .cart-drawer{transform:translateX(0)}
+.cart-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #333;
+  padding-bottom:20px;
+}
+.cart-header h2{font-size:22px}
+.close-cart{
+  background:none;
+  border:0;
+  color:white;
+  font-size:28px;
+}
+.cart-items{flex:1;overflow-y:auto;padding:20px 0}
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:15px 0;
+  border-bottom:1px solid #333;
+}
+.cart-item h4{font-size:12px}
+.cart-item p{font-size:12px;color:var(--gold);margin-top:8px}
+.remove{
+  background:none;
+  color:#999;
+  border:0;
+  font-size:11px;
+}
+.cart-total{
+  border-top:1px solid #333;
+  padding-top:20px;
+}
+.cart-total strong{font-size:20px}
+.checkout{
+  width:100%;
+  background:#d5c7ae;
+  border:0;
+  padding:17px;
+  margin-top:20px;
+  font-weight:900;
+  letter-spacing:2px;
+  font-size:10px;
+}
+.empty{color:#888;font-size:13px;margin-top:20px}
+
+/* MOBILE */
+@media(max-width:850px){
+  header{padding:0 4%}
+  nav{gap:15px}
+  nav a{font-size:9px}
+  .hero{min-height:580px}
+  .products{grid-template-columns:repeat(2,1fr);gap:12px}
+  .product-image{height:250px}
+  .categories{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:550px){
+  header{height:auto;min-height:72px;flex-wrap:wrap;padding:12px 5%}
+  .logo{font-size:29px}
+  nav{
+    order:3;
+    width:100%;
+    overflow-x:auto;
+    padding-top:15px;
+    padding-bottom:5px;
+  }
+  .hero{min-height:530px;padding:65px 7%}
+  .hero h1{letter-spacing:-5px}
+  .hero:after{font-size:100px;bottom:10px}
+  .section{padding:65px 5%}
+  .section-head{align-items:start}
+  .section-head p{display:none}
+  .section-head h2{letter-spacing:-2px}
+  .product-image{height:200px}
+  .product-info{padding:13px 10px}
+  .product-info h3{font-size:11px}
+  .add-button{font-size:8px;padding:12px 5px}
+  .brand-message{padding:75px 15px}
+  .brand-message h2{letter-spacing:-3px}
+}
+@media(hover:none){
+  .product:hover{transform:none!important}
 }
 </style>
 </head>
 
 <body>
-<div class="topbar">DELIVERY ALL OVER MOROCCO • OUTFITI STREETWEAR</div>
+
+<div class="topbar">
+FREE DELIVERY OFFERS · STREETWEAR FROM MOROCCO
+</div>
 
 <header>
-<a href="#" class="logo">OUTFITI<span>KENITRA</span></a>
+<a href="#home" class="logo">OUTFITI<span>KENITRA</span></a>
+
 <nav>
 <a href="#home">HOME</a>
 <a href="#categories">COLLECTION</a>
 <a href="#products">SHOP</a>
 <a href="#contact">CONTACT</a>
 </nav>
-<button class="cart" onclick="showCart()">BAG <span id="cart-count">0</span></button>
+
+<button class="cart-button" onclick="openCart()">
+BAG (<span id="cart-count">0</span>)
+</button>
 </header>
 
 <section class="hero" id="home">
 <div class="hero-content">
-<div class="tag">KENITRA · MOROCCO</div>
+<div class="eyebrow">KENITRA · MOROCCO · EST. 2026</div>
 <h1>OWN YOUR<br><span>STREET.</span></h1>
-<p>NOT JUST FASHION. IT'S YOUR IDENTITY.</p>
-<a href="#products" class="btn">SHOP NOW →</a>
+<p class="hero-description">
+NOT JUST FASHION.<br>
+IT'S YOUR IDENTITY.
+</p>
+<a href="#products" class="btn">EXPLORE COLLECTION →</a>
+<div class="hero-note">OUTFITI ORIGINAL · PREMIUM STREETWEAR</div>
 </div>
 </section>
+
+<div class="marquee">
+<div>
+OUTFITI ✦ OWN YOUR STREET ✦ BE DIFFERENT ✦
+OUTFITI ✦ OWN YOUR STREET ✦ BE DIFFERENT ✦
+OUTFITI ✦ OWN YOUR STREET ✦ BE DIFFERENT ✦
+</div>
+</div>
 
 <section class="section" id="categories">
-<div class="section-head"><div><p>FIND YOUR STYLE</p><h2>CATEGORIES.</h2></div></div>
+<div class="section-head">
+<div>
+<small>01 — FIND YOUR STYLE</small>
+<h2>THE COLLECTION.</h2>
+</div>
+<p>BUILT FOR YOUR IDENTITY.</p>
+</div>
+
 <div class="categories">
-<a class="category" href="#products"><strong>HOODIES</strong><small>01 / COLLECTION</small></a>
-<a class="category" href="#products"><strong>T-SHIRTS</strong><small>02 / COLLECTION</small></a>
-<a class="category" href="#products"><strong>JEANS</strong><small>03 / COLLECTION</small></a>
-<a class="category" href="#products"><strong>JOGGING</strong><small>04 / COLLECTION</small></a>
-<a class="category" href="#products"><strong>SNEAKERS</strong><small>05 / COLLECTION</small></a>
-<a class="category" href="#products"><strong>NEW ARRIVALS</strong><small>06 / COLLECTION</small></a>
-<a class="category" href="#products"><strong>SALE</strong><small>07 / COLLECTION</small></a>
+<a href="#products" class="category">
+<small>01 / COLLECTION</small><strong>HOODIES</strong>
+</a>
+<a href="#products" class="category">
+<small>02 / COLLECTION</small><strong>T-SHIRTS</strong>
+</a>
+<a href="#products" class="category">
+<small>03 / COLLECTION</small><strong>JEANS</strong>
+</a>
+<a href="#products" class="category">
+<small>04 / COLLECTION</small><strong>JOGGING</strong>
+</a>
+<a href="#products" class="category">
+<small>05 / COLLECTION</small><strong>SNEAKERS</strong>
+</a>
+<a href="#products" class="category">
+<small>06 / COLLECTION</small><strong>NEW ARRIVALS</strong>
+</a>
+<a href="#products" class="category">
+<small>07 / COLLECTION</small><strong>SALE</strong>
+</a>
 </div>
 </section>
 
-<section class="newdrop">
-<div class="tag">OUTFITI ORIGINAL</div>
+<section class="drop">
+<div class="drop-content">
+<div class="eyebrow">OUTFITI ORIGINAL</div>
 <h2>NEW DROP.</h2>
 <p>NEW SEASON. NEW ENERGY.</p>
-<a href="#products" class="btn">DISCOVER MORE</a>
+<a href="#products" class="btn">DISCOVER MORE →</a>
+</div>
 </section>
 
 <section class="section" id="products">
-<div class="section-head"><div><p>THE LATEST SELECTION</p><h2>OUR PRODUCTS.</h2></div></div>
-<div class="products" id="product-list"></div>
+<div class="section-head">
+<div>
+<small>02 — THE LATEST SELECTION</small>
+<h2>OUR PRODUCTS.</h2>
+</div>
+<p>SELECT YOUR NEXT LOOK.</p>
+</div>
+
+<div class="products">
+
+<div class="product">
+<div class="product-image">
+<span class="product-label">BESTSELLER</span>
+<img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=700" alt="Oversize Hoodie">
+</div>
+<div class="product-info">
+<h3>OVERSIZE HOODIE</h3>
+<div class="price">170 DH</div>
+<button class="add-button" onclick="addCart('Oversize Hoodie',170)">ADD TO BAG +</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-image">
+<span class="product-label">STREET ESSENTIAL</span>
+<img src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=700" alt="Baggy Jeans">
+</div>
+<div class="product-info">
+<h3>BAGGY JEANS</h3>
+<div class="price">199 DH</div>
+<button class="add-button" onclick="addCart('Baggy Jeans',199)">ADD TO BAG +</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-image">
+<span class="product-label">NEW ARRIVAL</span>
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=700" alt="Oversize T-shirt">
+</div>
+<div class="product-info">
+<h3>OVERSIZE T-SHIRT</h3>
+<div class="price">120 DH</div>
+<button class="add-button" onclick="addCart('Oversize T-Shirt',120)">ADD TO BAG +</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-image">
+<span class="product-label">LIMITED DROP</span>
+<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=700" alt="Street Sneakers">
+</div>
+<div class="product-info">
+<h3>STREET SNEAKERS</h3>
+<div class="price">350 DH</div>
+<button class="add-button" onclick="addCart('Street Sneakers',350)">ADD TO BAG +</button>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="brand-message">
+<small>THIS IS MORE THAN CLOTHING</small>
+<h2>OWN YOUR<br>IDENTITY.</h2>
+<p>OUTFITI · STREETWEAR · KENITRA · MOROCCO</p>
 </section>
 
 <footer id="contact">
 <div class="footer-inner">
-<div><h3>OUTFITI.</h3><p>OWN YOUR STREET.<br>STREETWEAR · KENITRA · MOROCCO</p></div>
-<div><h3>CONTACT</h3><p>WhatsApp: +212 613 163 038<br>Morocco Delivery</p>
-<a href="https://wa.me/212613163038" class="btn" style="margin-top:15px">CONTACT US</a></div>
+<div>
+<h3>OUTFITI.</h3>
+<p>OWN YOUR STREET.<br>STREETWEAR · KENITRA · MOROCCO</p>
 </div>
-<div class="copyright">© 2026 OUTFITI. ALL RIGHTS RESERVED.</div>
+<div>
+<h3>CONTACT</h3>
+<p>WHATSAPP: +212 613 163 038<br>DELIVERY THROUGHOUT MOROCCO</p>
+<a href="https://wa.me/212613163038" class="btn">CONTACT US →</a>
+</div>
+</div>
+<div class="copyright">
+© 2026 OUTFITI. ALL RIGHTS RESERVED.
+</div>
 </footer>
 
-<!-- PRODUCT OPTIONS -->
-<div class="modal" id="product-modal">
-<div class="modal-box">
-<button class="close" onclick="closeModal('product-modal')">×</button>
-<h2 id="option-name">PRODUCT</h2>
-<p id="option-price" style="font-weight:bold;margin-bottom:18px"></p>
-<div class="field"><label>CHOOSE SIZE / المقاس</label><select id="size-select"></select></div>
-<div class="field"><label>CHOOSE COLOR / اللون</label><select id="color-select"></select></div>
-<div class="field"><label>QUANTITY / الكمية</label><input id="quantity-select" type="number" min="1" max="20" value="1"></div>
-<button class="action" onclick="confirmAdd()">ADD TO BAG +</button>
-</div>
-</div>
-
-<!-- SHOPPING CART -->
-<div class="modal" id="cart-modal">
-<div class="modal-box">
-<button class="close" onclick="closeModal('cart-modal')">×</button>
+<!-- SHOPPING BAG -->
+<div class="cart-overlay" id="cart-overlay" onclick="overlayClose(event)">
+<div class="cart-drawer">
+<div class="cart-header">
 <h2>YOUR BAG.</h2>
-<div id="cart-items"></div>
-<div class="total"><span>TOTAL</span><span id="cart-total">0 DH</span></div>
-<button class="action" onclick="openCheckout()">CONTINUE TO CHECKOUT</button>
-<button class="action secondary" onclick="closeModal('cart-modal')">CONTINUE SHOPPING</button>
+<button class="close-cart" onclick="closeCart()">×</button>
 </div>
+<div class="cart-items" id="cart-items"></div>
+<div class="cart-total">
+TOTAL: <strong id="cart-total">0 DH</strong>
+<button class="checkout" onclick="checkout()">ORDER VIA WHATSAPP →</button>
 </div>
-
-<!-- CHECKOUT -->
-<div class="modal" id="checkout-modal">
-<div class="modal-box">
-<button class="close" onclick="closeModal('checkout-modal')">×</button>
-<h2>YOUR DETAILS.</h2>
-<p class="note">Complete your information to confirm your order on WhatsApp.</p>
-<div class="field"><label>FULL NAME / الاسم الكامل</label><input id="customer-name" placeholder="Your full name" autocomplete="name"></div>
-<div class="field"><label>PHONE / الهاتف</label><input id="customer-phone" type="tel" placeholder="06XXXXXXXX" autocomplete="tel"></div>
-<div class="field"><label>CITY / المدينة</label><input id="customer-city" placeholder="City" autocomplete="address-level2"></div>
-<div class="field"><label>FULL ADDRESS / العنوان</label><textarea id="customer-address" placeholder="Street, building, apartment..."></textarea></div>
-<div class="field"><label>EXTRA NOTE / ملاحظة (OPTIONAL)</label><textarea id="customer-note" placeholder="Any extra information"></textarea></div>
-<div class="total"><span>ORDER TOTAL</span><span id="checkout-total">0 DH</span></div>
-<button class="action" onclick="sendOrder()">CONFIRM ORDER ON WHATSAPP</button>
-<p class="note">Payment: Cash on delivery. Delivery fees are confirmed separately.</p>
 </div>
 </div>
 
 <script>
-const WHATSAPP_NUMBER = "212613163038";
-
-/* DEMO PRODUCTS: change names, prices, sizes and colors to match your real stock */
-const products = [
-{
-id:1,name:"Oversize Hoodie",price:170,
-image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600",
-sizes:["S","M","L","XL","XXL"],colors:["Black","White","Grey","Beige"]
-},
-{
-id:2,name:"Baggy Jeans",price:199,
-image:"https://images.unsplash.com/photo-1542272604-787c3835535d?w=600",
-sizes:["28","30","32","34","36"],colors:["Blue","Black","Grey"]
-},
-{
-id:3,name:"Oversize T-Shirt",price:120,
-image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
-sizes:["S","M","L","XL","XXL"],colors:["Black","White","Cream"]
-},
-{
-id:4,name:"Street Sneakers",price:350,
-image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600",
-sizes:["39","40","41","42","43","44"],colors:["White","Black","Red"]
-}
-];
-
 let cart = [];
-let selectedProduct = null;
 
-function renderProducts(){
-const list=document.getElementById("product-list");
-list.innerHTML=products.map(p=>`
-<div class="product">
-<img src="${p.image}" alt="${p.name}">
-<div class="product-info">
-<h3>${p.name}</h3>
-<p>${p.price} DH</p>
-<button onclick="chooseProduct(${p.id})">CHOOSE OPTIONS +</button>
-</div>
-</div>`).join("");
-}
-
-function chooseProduct(id){
-selectedProduct=products.find(p=>p.id===id);
-document.getElementById("option-name").textContent=selectedProduct.name;
-document.getElementById("option-price").textContent=selectedProduct.price+" DH";
-document.getElementById("size-select").innerHTML=
-selectedProduct.sizes.map(s=>`<option value="${s}">${s}</option>`).join("");
-document.getElementById("color-select").innerHTML=
-selectedProduct.colors.map(c=>`<option value="${c}">${c}</option>`).join("");
-document.getElementById("quantity-select").value=1;
-openModal("product-modal");
-}
-
-function confirmAdd(){
-if(!selectedProduct)return;
-const size=document.getElementById("size-select").value;
-const color=document.getElementById("color-select").value;
-const quantity=Math.max(1,Math.min(20,parseInt(document.getElementById("quantity-select").value)||1));
-const existing=cart.find(i=>i.id===selectedProduct.id&&i.size===size&&i.color===color);
-if(existing){existing.quantity+=quantity;}
-else{cart.push({...selectedProduct,size,color,quantity});}
-updateCart();
-closeModal("product-modal");
-alert("Product added to your bag!");
+function addCart(name,price){
+  cart.push({name,price});
+  updateCart();
+  openCart();
 }
 
 function updateCart(){
-document.getElementById("cart-count").textContent=cart.reduce((n,i)=>n+i.quantity,0);
-}
+  document.getElementById('cart-count').textContent=cart.length;
 
-function showCart(){
-renderCart();
-openModal("cart-modal");
-}
+  let total=0;
+  let html='';
 
-function renderCart(){
-const box=document.getElementById("cart-items");
-if(cart.length===0){
-box.innerHTML='<div class="empty">Your bag is empty.</div>';
-}else{
-box.innerHTML=cart.map((item,index)=>`
-<div class="cart-line">
-<div>
-<strong>${item.name}</strong><br>
-${item.size} · ${item.color}<br>
-${item.price} DH each
-<div class="qty">
-<button onclick="changeQty(${index},-1)">−</button>
-<span>${item.quantity}</span>
-<button onclick="changeQty(${index},1)">+</button>
-</div>
-</div>
-<div style="text-align:right">
-<strong>${item.price*item.quantity} DH</strong><br>
-<button onclick="removeItem(${index})">REMOVE</button>
-</div>
-</div>`).join("");
-}
-const total=cart.reduce((n,i)=>n+i.price*i.quantity,0);
-document.getElementById("cart-total").textContent=total+" DH";
-document.getElementById("checkout-total").textContent=total+" DH";
-}
+  if(cart.length===0){
+    html='<p class="empty">Your bag is empty.</p>';
+  }
 
-function changeQty(index,amount){
-cart[index].quantity+=amount;
-if(cart[index].quantity<=0)cart.splice(index,1);
-updateCart();renderCart();
+  cart.forEach((item,index)=>{
+    total+=item.price;
+    html+=`
+      <div class="cart-item">
+        <div>
+          <h4>${item.name}</h4>
+          <p>${item.price} DH</p>
+        </div>
+        <button class="remove" onclick="removeItem(${index})">REMOVE ×</button>
+      </div>
+    `;
+  });
+
+  document.getElementById('cart-items').innerHTML=html;
+  document.getElementById('cart-total').textContent=total+' DH';
 }
 
 function removeItem(index){
-cart.splice(index,1);
-updateCart();renderCart();
+  cart.splice(index,1);
+  updateCart();
 }
 
-function openCheckout(){
-if(cart.length===0){alert("Your bag is empty.");return;}
-closeModal("cart-modal");
-renderCart();
-openModal("checkout-modal");
+function openCart(){
+  document.getElementById('cart-overlay').classList.add('open');
 }
 
-function sendOrder(){
-const name=document.getElementById("customer-name").value.trim();
-const phone=document.getElementById("customer-phone").value.trim();
-const city=document.getElementById("customer-city").value.trim();
-const address=document.getElementById("customer-address").value.trim();
-const note=document.getElementById("customer-note").value.trim();
-
-if(!name||!phone||!city||!address){
-alert("Please complete your name, phone, city and address.");
-return;
-}
-if(cart.length===0){alert("Your bag is empty.");return;}
-
-let total=0;
-let message="*NEW OUTFITI ORDER*%0A%0A";
-message+="Name: "+encodeURIComponent(name)+"%0A";
-message+="Phone: "+encodeURIComponent(phone)+"%0A";
-message+="City: "+encodeURIComponent(city)+"%0A";
-message+="Address: "+encodeURIComponent(address)+"%0A%0A";
-message+="*PRODUCTS*%0A";
-
-cart.forEach(item=>{
-const line=item.name+" | Size: "+item.size+" | Color: "+item.color+" | Qty: "+item.quantity+" | "+(item.price*item.quantity)+" DH";
-message+=encodeURIComponent(line)+"%0A";
-total+=item.price*item.quantity;
-});
-
-message+="%0A*TOTAL: "+total+" DH*";
-message+="%0APayment: Cash on delivery";
-if(note)message+="%0ANote: "+encodeURIComponent(note);
-
-const url="https://wa.me/"+WHATSAPP_NUMBER+"?text="+message;
-window.open(url,"_blank");
+function closeCart(){
+  document.getElementById('cart-overlay').classList.remove('open');
 }
 
-function openModal(id){document.getElementById(id).classList.add("open");}
-function closeModal(id){document.getElementById(id).classList.remove("open");}
+function overlayClose(event){
+  if(event.target.id==='cart-overlay')closeCart();
+}
 
-document.querySelectorAll(".modal").forEach(modal=>{
-modal.addEventListener("click",e=>{
-if(e.target===modal)modal.classList.remove("open");
-});
-});
+function checkout(){
+  if(cart.length===0){
+    alert('Your bag is empty!');
+    return;
+  }
 
-renderProducts();
+  let total=0;
+  let message='Hello OUTFITI! I want to order:\n\n';
+
+  cart.forEach(item=>{
+    message+='- '+item.name+' : '+item.price+' DH\n';
+    total+=item.price;
+  });
+
+  message+='\nTOTAL: '+total+' DH\n\n';
+  message+='Please contact me to confirm my order.';
+
+  window.open(
+    'https://wa.me/212613163038?text='+encodeURIComponent(message),
+    '_blank'
+  );
+}
+
+/* CINEMATIC 3D PRODUCT TILT */
+if(window.matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('.product').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const rect=card.getBoundingClientRect();
+      const x=(e.clientX-rect.left)/rect.width;
+      const y=(e.clientY-rect.top)/rect.height;
+      card.style.transform=
+        `perspective(900px) rotateX(${(0.5-y)*9}deg) rotateY(${(x-0.5)*9}deg) translateY(-5px)`;
+    });
+
+    card.addEventListener('mouseleave',()=>{
+      card.style.transform='perspective(900px) rotateX(0) rotateY(0)';
+    });
+  });
+}
+
+/* HERO PARALLAX */
+if(window.matchMedia('(hover:hover)').matches){
+  const hero=document.querySelector('.hero');
+  hero.addEventListener('mousemove',e=>{
+    const x=(e.clientX/window.innerWidth-.5)*12;
+    const y=(e.clientY/window.innerHeight-.5)*8;
+    document.querySelector('.hero-content').style.transform=
+      `translate3d(${x}px,${y}px,35px)`;
+  });
+
+  hero.addEventListener('mouseleave',()=>{
+    document.querySelector('.hero-content').style.transform='';
+  });
+}
+
 updateCart();
 </script>
+
 </body>
 </html>
