@@ -91,8 +91,53 @@ tbody tr:last-child td{border-bottom:0}
 .notice.show{display:block}
 .mobile-nav{display:none}
 footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
+.orders-section{margin-top:42px;scroll-margin-top:24px}
+.orders-heading{align-items:end}
+.local-storage-note{display:block;margin-bottom:15px;background:#171b1a;border-color:#333d37;color:#b6c1ba}
+.orders-table{min-width:1030px}
+.status-select{min-width:120px;border-radius:20px;padding:7px 10px;font-size:10px;font-weight:800;letter-spacing:.4px}
+.status-select[data-status="delivered"]{color:#a3ddb8;border-color:#355643;background:#14251b}
+.status-select[data-status="cancelled"]{color:#f0a19a;border-color:#62403d;background:#2b1b1a}
+.status-select[data-status="shipped"]{color:#a8c8e8;border-color:#364d61;background:#18222a}
+.status-select[data-status="preparing"],.status-select[data-status="confirmed"]{color:#e6ca86;border-color:#594c30;background:#292317}
+.status-select[data-status="new"]{color:#d1d8d3}
+.order-subline{display:block;margin-top:3px;color:#818b85;font-size:10px}
+.order-items-text{max-width:240px;color:#bdc6c0;font-size:11px}
+.order-profit{white-space:nowrap;color:#9ad4ad;font-weight:700}
+.order-profit.negative{color:#f09a90}
+.order-dialog{width:min(760px,calc(100% - 24px));max-height:90vh;padding:0;border:1px solid #3c443f;border-radius:14px;background:#111615;color:var(--text);box-shadow:0 24px 90px #000b}
+.order-dialog::backdrop{background:#000b;backdrop-filter:blur(3px)}
+.order-dialog form{padding:24px}
+.dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:22px}
+.dialog-head h2{margin:0 0 5px;font-size:21px}
+.dialog-head p,.dialog-hint{margin:0;color:var(--muted);font-size:11px}
+.dialog-close{border:0;background:transparent;color:#d7ddd8;font-size:28px;cursor:pointer;line-height:1}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.form-grid label,.line-row label{display:flex;flex-direction:column;gap:6px;color:#aeb8b1;font-size:10px;letter-spacing:.6px}
+.form-grid input,.form-grid select,.line-row input,.line-row select{width:100%;min-width:0;border:1px solid #343d38;border-radius:7px;background:#0b0e0d;color:var(--text);padding:10px;font-size:12px}
+.line-head{display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px}
+.line-head strong{font-size:12px}
+.line-row{display:grid;grid-template-columns:minmax(135px,1.5fr) minmax(48px,.55fr) minmax(55px,.65fr) minmax(42px,.45fr) minmax(66px,.7fr) minmax(66px,.7fr) minmax(72px,.8fr) 34px;align-items:end;gap:8px;padding:11px 0;border-bottom:1px solid #282e2a}
+.line-row .line-product{grid-column:auto}
+.line-total-preview{height:37px;display:flex;align-items:center;color:#d9c292;font-size:11px;font-weight:800;white-space:nowrap}
+.remove-line{width:34px;height:37px;border:1px solid #483432;border-radius:7px;background:#241918;color:#efaaa2;font-size:19px;cursor:pointer}
+.draft-total{display:flex;justify-content:flex-end;gap:22px;margin-top:16px;padding:13px 0;border-top:1px solid #333d37;color:#8d9991;font-size:11px}
+.draft-total strong{display:block;color:#f0f1eb;text-align:right;font-size:15px}
+.dialog-hint{padding:7px 0 14px}
+.dialog-actions{display:flex;justify-content:flex-end;gap:9px;border-top:1px solid #29302c;padding-top:16px}
+.form-error{min-height:16px;margin:9px 0 0;color:#ef9e95;font-size:11px}
 @media(max-width:1100px){.sidebar{width:205px}.main{margin-left:205px;padding-inline:24px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.overview-grid{grid-template-columns:1fr}}
-@media(max-width:700px){.sidebar{display:none}.main{margin-left:0;padding:18px 15px 35px}.topline{margin-bottom:24px}.profile>div:last-child{display:none}.heading-row{align-items:flex-start;flex-direction:column}.heading-actions{width:100%}.heading-actions .button{flex:1;text-align:center}.metrics{gap:9px}.metric{min-height:112px;padding:14px}.metric-value{font-size:23px}.metric-note{font-size:9px}.overview-grid{gap:10px}.table-toolbar{align-items:flex-start;flex-direction:column}.table-tools{width:100%;flex-wrap:wrap}.search{width:100%;flex:1 1 100%}.table-tools select{flex:1;min-width:0}.products-heading{margin-bottom:18px}.top-actions .button{padding:9px 10px;font-size:11px}.breadcrumb{font-size:10px}}
+@media(max-width:700px){
+.orders-heading .heading-actions{display:grid;grid-template-columns:1fr 1fr}
+.orders-heading .heading-actions #new-order-button{grid-column:1/-1}
+.order-dialog form{padding:18px}
+.line-row{grid-template-columns:1fr 1fr 1fr;gap:9px}
+.line-row .line-product{grid-column:1/-1}
+.line-total-preview{height:auto;min-height:34px}
+.remove-line{height:34px;align-self:end}
+.dialog-head{margin-bottom:16px}
+.draft-total{justify-content:space-between}
+.sidebar{display:none}.main{margin-left:0;padding:18px 15px 35px}.topline{margin-bottom:24px}.profile>div:last-child{display:none}.heading-row{align-items:flex-start;flex-direction:column}.heading-actions{width:100%}.heading-actions .button{flex:1;text-align:center}.metrics{gap:9px}.metric{min-height:112px;padding:14px}.metric-value{font-size:23px}.metric-note{font-size:9px}.overview-grid{gap:10px}.table-toolbar{align-items:flex-start;flex-direction:column}.table-tools{width:100%;flex-wrap:wrap}.search{width:100%;flex:1 1 100%}.table-tools select{flex:1;min-width:0}.products-heading{margin-bottom:18px}.top-actions .button{padding:9px 10px;font-size:11px}.breadcrumb{font-size:10px}}
 @media(max-width:390px){.metrics{grid-template-columns:1fr 1fr}.metric-value{font-size:21px}.metric-top{font-size:9px}.category-row{grid-template-columns:78px 1fr 30px;gap:8px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
@@ -104,6 +149,7 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
   <div class="nav-label">WORKSPACE</div>
   <a class="nav-link active" href="#overview"><span class="nav-icon">◫</span>Overview</a>
   <a class="nav-link" href="#inventory"><span class="nav-icon">▤</span>Products &amp; inventory</a>
+  <a class="nav-link" href="#orders"><span class="nav-icon">▧</span>Orders</a>
   <div class="sidebar-bottom"><strong>Catalog status</strong><span id="sidebar-status">Connecting to product catalog…</span></div>
 </aside>
 <main class="main">
@@ -129,6 +175,12 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
       <article class="metric"><div class="metric-top"><span>UNITS IN STOCK</span><span class="metric-symbol">▦</span></div><div class="metric-value" id="metric-units">—</div><div class="metric-note">Across products with stock data</div></article>
       <article class="metric"><div class="metric-top"><span>LOW STOCK</span><span class="metric-symbol">⌁</span></div><div class="metric-value" id="metric-low">—</div><div class="metric-note">Between 1 and 5 units</div></article>
       <article class="metric"><div class="metric-top"><span>CATALOG VALUE</span><span class="metric-symbol">◇</span></div><div class="metric-value" id="metric-value">—</div><div class="metric-note">Current price × units in stock</div></article>
+    </div>
+    <div class="metrics order-metrics">
+      <article class="metric"><div class="metric-top"><span>COMPLETED SALES</span><span class="metric-symbol">↗</span></div><div class="metric-value" id="sales-revenue">0 DH</div><div class="metric-note">Delivered orders only</div></article>
+      <article class="metric"><div class="metric-top"><span>GROSS PROFIT</span><span class="metric-symbol">◇</span></div><div class="metric-value" id="sales-profit">0 DH</div><div class="metric-note">Sales less recorded product costs</div></article>
+      <article class="metric"><div class="metric-top"><span>OPEN ORDERS</span><span class="metric-symbol">◷</span></div><div class="metric-value" id="sales-open">0</div><div class="metric-note">Awaiting delivery or cancellation</div></article>
+      <article class="metric"><div class="metric-top"><span>AVERAGE ORDER</span><span class="metric-symbol">⌁</span></div><div class="metric-value" id="sales-average">0 DH</div><div class="metric-note">Delivered orders only</div></article>
     </div>
     <div class="overview-grid">
       <section class="panel">
@@ -164,6 +216,56 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
       </div>
     </div>
   </section>
+    <section id="orders" class="orders-section">
+    <div class="heading-row orders-heading">
+      <div><h1>Orders</h1><p class="subtitle">Log manual orders and follow each order through delivery.</p></div>
+      <div class="heading-actions">
+        <button class="button" id="export-orders" type="button">Export backup</button>
+        <button class="button" id="import-orders-trigger" type="button">Import backup</button>
+        <input id="import-orders-file" type="file" accept="application/json,.json" hidden>
+        <button class="button primary" id="new-order-button" type="button">+ Log an order</button>
+      </div>
+    </div>
+    <div class="notice show local-storage-note">Orders are saved in this browser only. Export a backup to move or protect your order history.</div>
+    <div class="panel table-panel">
+      <div class="table-toolbar">
+        <h2>Order history <span id="orders-count" style="color:#78827c;font-weight:500"></span></h2>
+        <div class="table-tools">
+          <input class="search" id="order-search" type="search" placeholder="Search orders or customers…" aria-label="Search orders">
+          <select id="order-status-filter" aria-label="Filter orders by status">
+            <option value="">All statuses</option>
+            <option value="new">New</option><option value="confirmed">Confirmed</option>
+            <option value="preparing">Preparing</option><option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option><option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="orders-table">
+          <thead><tr><th>ORDER / CUSTOMER</th><th>ITEMS</th><th>ORDER TOTAL</th><th>GROSS PROFIT</th><th>STATUS</th></tr></thead>
+          <tbody id="order-rows"><tr><td colspan="5" class="empty-state">No orders logged yet.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <dialog id="order-dialog" class="order-dialog">
+    <form id="manual-order-form">
+      <div class="dialog-head"><div><h2>Log a manual order</h2><p>Record an order received in person or through a sales channel.</p></div><button type="button" class="dialog-close" id="close-order-dialog" aria-label="Close">×</button></div>
+      <div class="form-grid">
+        <label>Customer name<input id="order-customer" required maxlength="100" placeholder="Customer name"></label>
+        <label>Phone or contact<input id="order-contact" maxlength="80" placeholder="Phone, Instagram handle, etc."></label>
+        <label>Sales channel<select id="order-channel"><option>WhatsApp</option><option>Instagram</option><option>In store</option><option>Other</option></select></label>
+        <label>Initial status<select id="order-initial-status"><option value="new">New</option><option value="confirmed">Confirmed</option><option value="preparing">Preparing</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option></select></label>
+      </div>
+      <div class="line-head"><strong>Order items</strong><button type="button" class="button small" id="add-order-line">+ Add item</button></div>
+      <div id="order-lines"></div>
+      <div class="draft-total"><span>Order total <strong id="draft-total">0 DH</strong></span><span>Gross profit <strong id="draft-profit">0 DH</strong></span></div>
+      <p class="dialog-hint">Enter the unit cost for each item to calculate gross profit. Cost defaults to the product’s CMS value when available.</p>
+      <div class="dialog-actions"><button type="button" class="button" id="cancel-order">Cancel</button><button type="submit" class="button primary">Save order</button></div>
+      <p id="order-form-error" class="form-error" role="alert"></p>
+    </form>
+  </dialog>
+
   <footer>OUTFITI ADMIN STUDIO · Catalog data from content/products.json</footer>
 </main>
 </div>
@@ -171,6 +273,10 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
 "use strict";
 const PRODUCTS_URL=new URL("content/products.json",new URL(".",window.location.href));
 let products=[];
+const ORDER_STORAGE_KEY="outfiti-admin-orders-v1";
+const ORDER_STATUSES=["new","confirmed","preparing","shipped","delivered","cancelled"];
+const ORDER_STATUS_LABELS={new:"New",confirmed:"Confirmed",preparing:"Preparing",shipped:"Shipped",delivered:"Delivered",cancelled:"Cancelled"};
+let orders=readOrders();
 const money=value=>Number(value||0).toLocaleString("en-US")+" DH";
 const safe=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 function imageUrl(path){
@@ -184,7 +290,7 @@ function normalize(item,index){
   const current=Number.isFinite(sale)&&sale>0?sale:price;
   const compare=Number(item.originalPrice);
   const original=Number.isFinite(compare)&&compare>current?compare:(sale>0&&price>current?price:null);
-  return {id:String(item.id||("product-"+index)),name:String(item.name||"Unnamed product"),category:String(item.category||"Uncategorized"),price:current,originalPrice:original,stock:item.stock==null?null:Math.max(0,Number(item.stock)||0),featured:item.featured===true,isNew:item.isNew===true,image:imageUrl(item.image),gallery:Array.isArray(item.gallery)?item.gallery.slice(0,6).map(imageUrl):[]};
+  return {id:String(item.id||("product-"+index)),name:String(item.name||"Unnamed product"),category:String(item.category||"Uncategorized"),price:current,originalPrice:original,cost:item.cost==null?null:Math.max(0,Number(item.cost)||0),stock:item.stock==null?null:Math.max(0,Number(item.stock)||0),featured:item.featured===true,isNew:item.isNew===true,image:imageUrl(item.image),gallery:Array.isArray(item.gallery)?item.gallery.slice(0,6).map(imageUrl):[]};
 }
 function stockType(product){
   if(product.stock===null)return "unknown";
@@ -287,11 +393,207 @@ function exportCsv(){
   link.click();
   URL.revokeObjectURL(link.href);
 }
+function readOrders(){
+  try{
+    const raw=localStorage.getItem(ORDER_STORAGE_KEY);
+    if(!raw)return [];
+    const parsed=JSON.parse(raw);
+    const list=Array.isArray(parsed)?parsed:(parsed&&Array.isArray(parsed.orders)?parsed.orders:[]);
+    return list.filter(order=>order&&typeof order.id==="string"&&typeof order.customer==="string"&&Array.isArray(order.items)&&ORDER_STATUSES.includes(order.status));
+  }catch(error){return []}
+}
+function saveOrders(){
+  try{
+    localStorage.setItem(ORDER_STORAGE_KEY,JSON.stringify(orders));
+    showOrderNotice("Orders are saved in this browser only. Export a backup to move or protect your order history.",false);
+    return true;
+  }catch(error){
+    showOrderNotice("Could not save to this browser. Your current session still has the order data; export a backup now.",true);
+    return false;
+  }
+}
+function showOrderNotice(message,isError){
+  const note=document.querySelector(".local-storage-note");
+  if(!note)return;
+  note.textContent=message;
+  note.classList.toggle("error-note",!!isError);
+}
+function orderTotals(items){
+  return items.reduce((total,item)=>({
+    revenue:total.revenue+item.unitPrice*item.quantity,
+    profit:total.profit+(item.unitPrice-item.unitCost)*item.quantity
+  }),{revenue:0,profit:0});
+}
+function updateSalesMetrics(){
+  const delivered=orders.filter(order=>order.status==="delivered");
+  const revenue=delivered.reduce((sum,order)=>sum+Number(order.total||0),0);
+  const profit=delivered.reduce((sum,order)=>sum+Number(order.grossProfit||0),0);
+  const open=orders.filter(order=>order.status!=="delivered"&&order.status!=="cancelled").length;
+  document.getElementById("sales-revenue").textContent=money(revenue);
+  document.getElementById("sales-profit").textContent=money(profit);
+  document.getElementById("sales-open").textContent=String(open);
+  document.getElementById("sales-average").textContent=money(delivered.length?revenue/delivered.length:0);
+}
+function renderOrders(){
+  updateSalesMetrics();
+  const query=document.getElementById("order-search").value.trim().toLowerCase();
+  const selectedStatus=document.getElementById("order-status-filter").value;
+  const visible=orders.filter(order=>{
+    const text=[order.id,order.customer,order.contact||"",...(order.items||[]).map(item=>item.productName)].join(" ").toLowerCase();
+    return (!query||text.includes(query))&&(!selectedStatus||order.status===selectedStatus);
+  }).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  document.getElementById("orders-count").textContent="("+visible.length+")";
+  const body=document.getElementById("order-rows");
+  body.innerHTML=visible.length?visible.map(order=>{
+    const itemsText=order.items.map(item=>safe(item.productName)+" × "+item.quantity).join(", ");
+    const statusOptions=ORDER_STATUSES.map(status=>'<option value="'+status+'" '+(status===order.status?"selected":"")+'>'+ORDER_STATUS_LABELS[status]+"</option>").join("");
+    const date=new Date(order.createdAt).toLocaleString();
+    const profit=Number(order.grossProfit||0);
+    return '<tr><td><strong>'+safe(order.id)+'</strong><span class="order-subline">'+safe(order.customer)+(order.contact?" · "+safe(order.contact):"")+'</span><span class="order-subline">'+safe(date)+" · "+safe(order.channel||"Manual")+'</span></td><td><div class="order-items-text">'+itemsText+'</div></td><td class="money">'+money(order.total)+'</td><td class="order-profit '+(profit<0?"negative":"")+'">'+money(profit)+'</td><td><select class="status-select" data-order-id="'+safe(order.id)+'" data-status="'+safe(order.status)+'" aria-label="Order status">'+statusOptions+"</select></td></tr>";
+  }).join(""):'<tr><td colspan="5" class="empty-state">No matching orders.</td></tr>';
+  body.querySelectorAll(".status-select").forEach(select=>select.addEventListener("change",()=>changeOrderStatus(select.dataset.orderId,select.value)));
+}
+function changeOrderStatus(orderId,status){
+  if(!ORDER_STATUSES.includes(status))return;
+  const order=orders.find(item=>item.id===orderId);
+  if(!order)return;
+  order.status=status;
+  order.updatedAt=new Date().toISOString();
+  if(status==="delivered"&&!order.deliveredAt)order.deliveredAt=order.updatedAt;
+  if(status!=="delivered")delete order.deliveredAt;
+  saveOrders();
+  renderOrders();
+}
+
+function orderProductOptions(selectedId){
+  return '<option value="">Select a product</option>'+products.map(product=>'<option value="'+safe(product.id)+'" '+(product.id===selectedId?"selected":"")+'>'+safe(product.name)+(product.stock===null?"":" · "+product.stock+" in stock")+"</option>").join("");
+}
+function addOrderLine(){
+  const container=document.getElementById("order-lines");
+  const row=document.createElement("div");
+  row.className="line-row";
+  row.innerHTML='<label class="line-product">Product<select class="line-product-select" required>'+orderProductOptions("")+'</select></label>'+
+    '<label>Size<input class="line-size" maxlength="30" placeholder="e.g. M"></label>'+
+    '<label>Color<input class="line-color" maxlength="40" placeholder="e.g. Black"></label>'+
+    '<label>Qty<input class="line-quantity" type="number" min="1" step="1" value="1" required></label>'+
+    '<label>Unit price<input class="line-price" type="number" min="0" step="0.01" required></label>'+
+    '<label>Unit cost<input class="line-cost" type="number" min="0" step="0.01" required></label>'+
+    '<span class="line-total-preview">—</span>'+
+    '<button type="button" class="remove-line" aria-label="Remove product">×</button>';
+  container.appendChild(row);
+  row.querySelector(".line-product-select").addEventListener("change",()=>{
+    const product=products.find(item=>item.id===row.querySelector(".line-product-select").value);
+    row.querySelector(".line-price").value=product?product.price:"";
+    row.querySelector(".line-cost").value=product&&product.cost!==null?product.cost:"";
+    updateDraftTotals();
+  });
+  row.querySelectorAll("input").forEach(input=>input.addEventListener("input",updateDraftTotals));
+  row.querySelector(".remove-line").addEventListener("click",()=>{
+    row.remove();
+    if(!container.children.length)addOrderLine();
+    updateDraftTotals();
+  });
+  updateDraftTotals();
+}
+function draftLines(){
+  return Array.from(document.querySelectorAll("#order-lines .line-row")).map(row=>({
+    product:products.find(item=>item.id===row.querySelector(".line-product-select").value),
+    size:row.querySelector(".line-size").value.trim(),
+    color:row.querySelector(".line-color").value.trim(),
+    quantity:Number(row.querySelector(".line-quantity").value),
+    unitPrice:Number(row.querySelector(".line-price").value),
+    unitCost:Number(row.querySelector(".line-cost").value),
+    costEntered:row.querySelector(".line-cost").value!==""
+  }));
+}
+function updateDraftTotals(){
+  const lines=draftLines();
+  document.querySelectorAll("#order-lines .line-row").forEach(row=>{
+    const quantity=Number(row.querySelector(".line-quantity").value);
+    const unitPrice=Number(row.querySelector(".line-price").value);
+    const preview=row.querySelector(".line-total-preview");
+    if(preview)preview.textContent=Number.isFinite(quantity)&&Number.isFinite(unitPrice)?money(quantity*unitPrice):"—";
+  });
+  const total=lines.reduce((sum,line)=>sum+(Number.isFinite(line.unitPrice)?line.unitPrice:0)*(Number.isFinite(line.quantity)?line.quantity:0),0);
+  const complete=lines.every(line=>line.costEntered&&Number.isFinite(line.unitCost));
+  const profit=lines.reduce((sum,line)=>sum+((Number.isFinite(line.unitPrice)?line.unitPrice:0)-(Number.isFinite(line.unitCost)?line.unitCost:0))*(Number.isFinite(line.quantity)?line.quantity:0),0);
+  document.getElementById("draft-total").textContent=money(total);
+  document.getElementById("draft-profit").textContent=complete?money(profit):"Enter unit costs";
+}
+function resetOrderForm(){
+  document.getElementById("manual-order-form").reset();
+  document.getElementById("order-lines").innerHTML="";
+  document.getElementById("order-form-error").textContent="";
+  addOrderLine();
+}
+function openOrderDialog(){
+  if(!products.length){
+    showOrderNotice("Load the product catalog before logging an order.",true);
+    return;
+  }
+  resetOrderForm();
+  document.getElementById("order-dialog").showModal();
+}
+function createOrder(event){
+  event.preventDefault();
+  const customer=document.getElementById("order-customer").value.trim();
+  const lines=draftLines();
+  const error=document.getElementById("order-form-error");
+  if(!customer){error.textContent="Enter the customer name.";return}
+  if(!lines.length||lines.some(line=>!line.product||!Number.isInteger(line.quantity)||line.quantity<1||!Number.isFinite(line.unitPrice)||line.unitPrice<0||!line.costEntered||!Number.isFinite(line.unitCost)||line.unitCost<0)){
+    error.textContent="Choose a product and enter a valid quantity, unit price, and unit cost for every item.";return;
+  }
+  const items=lines.map(line=>({productId:line.product.id,productName:line.product.name,size:line.size,color:line.color,quantity:line.quantity,unitPrice:line.unitPrice,unitCost:line.unitCost}));
+  const totals=orderTotals(items);
+  const now=new Date().toISOString();
+  const status=document.getElementById("order-initial-status").value;
+  const order={id:"OUT-"+now.slice(0,10).replace(/-/g,"")+"-"+Math.random().toString(36).slice(2,6).toUpperCase(),customer,contact:document.getElementById("order-contact").value.trim(),channel:document.getElementById("order-channel").value,status,createdAt:now,updatedAt:now,deliveredAt:status==="delivered"?now:null,items,total:totals.revenue,grossProfit:totals.profit};
+  orders.push(order);
+  saveOrders();
+  renderOrders();
+  document.getElementById("order-dialog").close();
+}
+
+function exportOrders(){
+  const backup={format:"outfiti-orders-v1",exportedAt:new Date().toISOString(),orders};
+  const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob),link=document.createElement("a");
+  link.href=url;link.download="outfiti-orders-backup.json";link.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+async function importOrders(file){
+  if(!file)return;
+  try{
+    const parsed=JSON.parse(await file.text());
+    const incoming=Array.isArray(parsed)?parsed:parsed.orders;
+    if(!Array.isArray(incoming)||incoming.some(order=>!order||typeof order.id!=="string"||typeof order.customer!=="string"||!Array.isArray(order.items)||!ORDER_STATUSES.includes(order.status)))throw new Error("Invalid order backup");
+    if(!window.confirm("Replace the orders saved in this browser with "+incoming.length+" imported orders?"))return;
+    orders=incoming;
+    saveOrders();
+    renderOrders();
+    showOrderNotice("Imported "+orders.length+" orders into this browser. Export a backup to move or protect your order history.",false);
+  }catch(error){showOrderNotice("That backup file could not be read. Choose an OUTFITI orders backup JSON file.",true)}
+}
+function setupOrderManagement(){
+  document.getElementById("new-order-button").addEventListener("click",openOrderDialog);
+  document.getElementById("add-order-line").addEventListener("click",addOrderLine);
+  document.getElementById("close-order-dialog").addEventListener("click",()=>document.getElementById("order-dialog").close());
+  document.getElementById("cancel-order").addEventListener("click",()=>document.getElementById("order-dialog").close());
+  document.getElementById("manual-order-form").addEventListener("submit",createOrder);
+  document.getElementById("order-search").addEventListener("input",renderOrders);
+  document.getElementById("order-status-filter").addEventListener("change",renderOrders);
+  document.getElementById("export-orders").addEventListener("click",exportOrders);
+  document.getElementById("import-orders-trigger").addEventListener("click",()=>document.getElementById("import-orders-file").click());
+  document.getElementById("import-orders-file").addEventListener("change",event=>importOrders(event.target.files[0]));
+  renderOrders();
+}
+
 document.getElementById("refresh-button").addEventListener("click",loadProducts);
 document.getElementById("search-input").addEventListener("input",renderRows);
 document.getElementById("category-filter").addEventListener("change",renderRows);
 document.getElementById("stock-filter").addEventListener("change",renderRows);
 document.getElementById("export-button").addEventListener("click",exportCsv);
+setupOrderManagement();
 loadProducts();
 </script>
 </body>
