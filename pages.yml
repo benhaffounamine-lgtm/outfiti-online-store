@@ -1,0 +1,41 @@
+media: media
+
+content:
+  - name: products
+    label: OUTFITI Products
+    type: file
+    path: content/products.json
+    format: json
+    list: true
+    fields:
+      - name: id
+        label: Product ID
+        type: string
+      - name: name
+        label: Product Name
+        type: string
+        required: true
+      - name: price
+        label: Price (DH)
+        type: number
+        required: true
+      - name: image
+        label: Product Image
+        type: image
+      - name: description
+        label: Description
+        type: text
+      - name: category
+        label: Category
+        type: string
+      - name: sizes
+        label: Sizes
+        type: string
+        list: true
+      - name: colors
+        label: Colors
+        type: string
+        list: true
+      - name: stock
+        label: Stock Quantity
+        type: number
