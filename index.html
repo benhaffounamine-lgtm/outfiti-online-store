@@ -866,17 +866,18 @@ function checkout(){
   let message="Hello OUTFITI! I want to order:\n\n";
 
   cart.forEach(item=>{
-    const subtotal=item.price*item.quantity;
-    total+=subtotal;
+    const lineTotal=item.price*item.quantity;
+    total+=lineTotal;
 
     message+="- "+item.name+
       "\nSize: "+item.size+
       "\nColor: "+item.color+
       "\nQuantity: "+item.quantity+
-      "\nSubtotal: "+subtotal+" DH\n\n";
+      "\nUnit price: "+formatPrice(item.price)+
+      "\nLine total: "+formatPrice(lineTotal)+"\n\n";
   });
 
-  message+="TOTAL: "+total+" DH\n\n";
+  message+="ORDER TOTAL: "+formatPrice(total)+"\n\n";
   message+="Please contact me to confirm my order.";
 
   window.open(
