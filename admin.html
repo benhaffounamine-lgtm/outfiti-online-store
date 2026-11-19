@@ -91,6 +91,17 @@ tbody tr:last-child td{border-bottom:0}
 .notice.show{display:block}
 .mobile-nav{display:none}
 footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
+.sales-performance{margin:0 0 24px}
+.period-select{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:9px;letter-spacing:1.5px}
+.period-select select{color:var(--text)}
+.sales-trend{height:205px;padding:8px 20px 18px;display:flex;align-items:stretch;gap:8px;overflow-x:auto}
+.trend-column{flex:1 0 42px;min-width:42px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px}
+.trend-value{font-size:9px;color:#c5cec8;white-space:nowrap}
+.trend-bar-track{height:132px;width:min(25px,70%);display:flex;align-items:flex-end;border-bottom:1px solid #39413c;background:linear-gradient(to top,#171b1a 1px,transparent 1px);border-radius:4px 4px 0 0;overflow:hidden}
+.trend-bar{width:100%;min-height:2px;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#d6bd96,#8f7452);transition:height .25s ease}
+.trend-label{font-size:9px;color:#858f89;white-space:nowrap}
+.sales-empty{width:100%;align-self:center;text-align:center;color:var(--muted);font-size:12px}
+@media(max-width:700px){.sales-performance .panel-head{align-items:flex-start;gap:12px}.period-select{flex-direction:column;align-items:flex-end}.sales-trend{height:190px;padding-inline:12px}.trend-bar-track{height:115px}}
 .orders-section{margin-top:42px;scroll-margin-top:24px}
 .error-note{border-color:#633c39!important;background:#271a19!important;color:#f0aaa1!important}
 .database-dialog{width:min(650px,calc(100% - 24px))}
@@ -188,6 +199,20 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
       <article class="metric"><div class="metric-top"><span>OPEN ORDERS</span><span class="metric-symbol">◷</span></div><div class="metric-value" id="sales-open">0</div><div class="metric-note">Awaiting delivery or cancellation</div></article>
       <article class="metric"><div class="metric-top"><span>AVERAGE ORDER</span><span class="metric-symbol">⌁</span></div><div class="metric-value" id="sales-average">0 DH</div><div class="metric-note">Delivered orders only</div></article>
     </div>
+    <section class="panel sales-performance">
+      <div class="panel-head">
+        <div><h2>Sales trend</h2><span id="sales-period-summary">Delivered order revenue</span></div>
+        <label class="period-select" for="sales-period">PERIOD
+          <select id="sales-period" aria-label="Sales period">
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="all" selected>All time</option>
+          </select>
+        </label>
+      </div>
+      <div id="sales-trend" class="sales-trend" role="img" aria-label="Delivered order sales trend"></div>
+    </section>
     <div class="overview-grid">
       <section class="panel">
         <div class="panel-head"><h2>Products by category</h2><span id="category-summary">—</span></div>
@@ -594,8 +619,71 @@ function orderTotals(items){
     profit:total.profit+(item.unitPrice-item.unitCost)*item.quantity
   }),{revenue:0,profit:0});
 }
+function orderDeliveryDate(order){
+  const date=new Date(order.deliveredAt||order.updatedAt||order.createdAt);
+  return Number.isNaN(date.getTime())?null:date;
+}
+function deliveredOrdersForPeriod(){
+  const period=document.getElementById("sales-period").value||"all";
+  const delivered=orders.filter(order=>order.status==="delivered"&&orderDeliveryDate(order));
+  if(period==="all")return delivered;
+  const days=Number(period);
+  const start=new Date();
+  start.setHours(0,0,0,0);
+  start.setDate(start.getDate()-(days-1));
+  return delivered.filter(order=>orderDeliveryDate(order)>=start);
+}
+function renderSalesTrend(delivered){
+  const period=document.getElementById("sales-period").value||"all";
+  let buckets=[];
+  if(period==="all"){
+    const now=new Date(),monthStart=new Date(now.getFullYear(),now.getMonth()-11,1);
+    const older={label:"Older",revenue:0,profit:0};
+    buckets=[older];
+    for(let offset=11;offset>=0;offset--){
+      const date=new Date(now.getFullYear(),now.getMonth()-offset,1);
+      buckets.push({label:date.toLocaleDateString(undefined,{month:"short"}),revenue:0,profit:0,start:date});
+    }
+    delivered.forEach(order=>{
+      const date=orderDeliveryDate(order);
+      if(!date)return;
+      if(date<monthStart){older.revenue+=Number(order.total||0);older.profit+=Number(order.grossProfit||0);return}
+      const index=1+(date.getFullYear()-monthStart.getFullYear())*12+(date.getMonth()-monthStart.getMonth());
+      const bucket=buckets[Math.min(buckets.length-1,Math.max(1,index))];
+      bucket.revenue+=Number(order.total||0);bucket.profit+=Number(order.grossProfit||0);
+    });
+  }else{
+    const days=Number(period),count=days===7?7:days===30?6:13;
+    const start=new Date();start.setHours(0,0,0,0);start.setDate(start.getDate()-(days-1));
+    const span=days/count;
+    buckets=Array.from({length:count},(_,index)=>{
+      const from=new Date(start.getTime()+index*span*86400000);
+      const to=new Date(start.getTime()+Math.min(days,(index+1)*span)*86400000-1);
+      const label=days===7?from.toLocaleDateString(undefined,{weekday:"short"}):from.toLocaleDateString(undefined,{day:"numeric",month:"short"});
+      return {label,revenue:0,profit:0,from,to};
+    });
+    delivered.forEach(order=>{
+      const date=orderDeliveryDate(order);
+      if(!date||date<start)return;
+      const index=Math.min(count-1,Math.floor((date-start)/(span*86400000)));
+      buckets[index].revenue+=Number(order.total||0);
+      buckets[index].profit+=Number(order.grossProfit||0);
+    });
+  }
+  const chart=document.getElementById("sales-trend");
+  const max=Math.max(0,...buckets.map(bucket=>bucket.revenue));
+  if(!delivered.length){
+    chart.innerHTML='<div class="sales-empty">No delivered orders in this period yet.</div>';
+    return;
+  }
+  chart.innerHTML=buckets.map(bucket=>{
+    const height=max?Math.max(2,bucket.revenue/max*100):2;
+    const title=bucket.label+": "+money(bucket.revenue)+" sales, "+money(bucket.profit)+" gross profit";
+    return '<div class="trend-column" title="'+safe(title)+'" aria-label="'+safe(title)+'"><span class="trend-value">'+(bucket.revenue?money(bucket.revenue):"")+'</span><div class="trend-bar-track"><div class="trend-bar" style="height:'+height+'%"></div></div><span class="trend-label">'+safe(bucket.label)+'</span></div>';
+  }).join("");
+}
 function updateSalesMetrics(){
-  const delivered=orders.filter(order=>order.status==="delivered");
+  const delivered=deliveredOrdersForPeriod();
   const revenue=delivered.reduce((sum,order)=>sum+Number(order.total||0),0);
   const profit=delivered.reduce((sum,order)=>sum+Number(order.grossProfit||0),0);
   const open=orders.filter(order=>order.status!=="delivered"&&order.status!=="cancelled").length;
@@ -603,6 +691,8 @@ function updateSalesMetrics(){
   document.getElementById("sales-profit").textContent=money(profit);
   document.getElementById("sales-open").textContent=String(open);
   document.getElementById("sales-average").textContent=money(delivered.length?revenue/delivered.length:0);
+  document.getElementById("sales-period-summary").textContent=delivered.length+" delivered order"+(delivered.length===1?"":"s")+(document.getElementById("sales-period").value==="all"?" · All time":" · Selected period");
+  renderSalesTrend(delivered);
 }
 function renderOrders(){
   updateSalesMetrics();
@@ -773,6 +863,7 @@ function setupOrderManagement(){
   document.getElementById("manual-order-form").addEventListener("submit",createOrder);
   document.getElementById("order-search").addEventListener("input",renderOrders);
   document.getElementById("order-status-filter").addEventListener("change",renderOrders);
+document.getElementById("sales-period").addEventListener("change",updateSalesMetrics);
   document.getElementById("export-orders").addEventListener("click",exportOrders);
   document.getElementById("import-orders-trigger").addEventListener("click",()=>document.getElementById("import-orders-file").click());
   document.getElementById("import-orders-file").addEventListener("change",event=>importOrders(event.target.files[0]));
