@@ -1,9 +1,12 @@
 [
   {
     "id": "hoodie-001",
-    "name": "capche crop",
+    "name": "hoodie crop",
     "price": 249,
     "image": "/media/WhatsApp Image 2026-11-19 at 16.14.13.jpeg",
+    "gallery": [
+      "/media/WhatsApp Image 2026-11-19 at 16.14.14.jpeg"
+    ],
     "description": "hoodie crop oversize streetwear",
     "category": "Hoodie",
     "sizes": [
