@@ -1,6 +1,12 @@
 [
   {
+    "id": "hoodie-001",
     "name": "capche crop",
-    "price": 249
+    "price": 249,
+    "image": "/media/WhatsApp Image 2026-11-19 at 16.14.13.jpeg",
+    "category": "Hoodie",
+    "sizes": [
+      "s"
+    ]
   }
 ]
