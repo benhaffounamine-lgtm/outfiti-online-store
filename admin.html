@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OUTFITI Admin | Inventory</title>
-<meta name="description" content="OUTFITI product catalog and inventory dashboard.">
+<title>OUTFITI Admin | Orders &amp; Inventory</title>
+<meta name="description" content="OUTFITI product catalog, order management, inventory, and database sync dashboard.">
 <meta name="theme-color" content="#0b0c0c">
 <style>
 :root{color-scheme:dark;--bg:#0b0c0c;--panel:#121515;--panel2:#171b1a;--line:#262c29;--text:#f1f1eb;--muted:#8a938e;--gold:#c0a47a;--green:#91d2ae;--red:#ef8c88;--yellow:#e8c778}
@@ -92,6 +92,11 @@ tbody tr:last-child td{border-bottom:0}
 .mobile-nav{display:none}
 footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
 .orders-section{margin-top:42px;scroll-margin-top:24px}
+.error-note{border-color:#633c39!important;background:#271a19!important;color:#f0aaa1!important}
+.database-dialog{width:min(650px,calc(100% - 24px))}
+#database-sync-button{white-space:nowrap}
+.database-state-online{border-color:#355643!important;color:#a3ddb8!important}
+.database-state-error{border-color:#633c39!important;color:#f0aaa1!important}
 .orders-heading{align-items:end}
 .local-storage-note{display:block;margin-bottom:15px;background:#171b1a;border-color:#333d37;color:#b6c1ba}
 .orders-table{min-width:1030px}
@@ -137,7 +142,7 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
 .remove-line{height:34px;align-self:end}
 .dialog-head{margin-bottom:16px}
 .draft-total{justify-content:space-between}
-.sidebar{display:none}.main{margin-left:0;padding:18px 15px 35px}.topline{margin-bottom:24px}.profile>div:last-child{display:none}.heading-row{align-items:flex-start;flex-direction:column}.heading-actions{width:100%}.heading-actions .button{flex:1;text-align:center}.metrics{gap:9px}.metric{min-height:112px;padding:14px}.metric-value{font-size:23px}.metric-note{font-size:9px}.overview-grid{gap:10px}.table-toolbar{align-items:flex-start;flex-direction:column}.table-tools{width:100%;flex-wrap:wrap}.search{width:100%;flex:1 1 100%}.table-tools select{flex:1;min-width:0}.products-heading{margin-bottom:18px}.top-actions .button{padding:9px 10px;font-size:11px}.breadcrumb{font-size:10px}}
+.sidebar{display:none}.main{margin-left:0;padding:18px 15px 35px}.topline{margin-bottom:24px;align-items:flex-start;flex-wrap:wrap}.top-actions{width:100%;justify-content:flex-start;flex-wrap:wrap}.database-dialog .form-grid{grid-template-columns:1fr}.profile>div:last-child{display:none}.heading-row{align-items:flex-start;flex-direction:column}.heading-actions{width:100%}.heading-actions .button{flex:1;text-align:center}.metrics{gap:9px}.metric{min-height:112px;padding:14px}.metric-value{font-size:23px}.metric-note{font-size:9px}.overview-grid{gap:10px}.table-toolbar{align-items:flex-start;flex-direction:column}.table-tools{width:100%;flex-wrap:wrap}.search{width:100%;flex:1 1 100%}.table-tools select{flex:1;min-width:0}.products-heading{margin-bottom:18px}.top-actions .button{padding:9px 10px;font-size:11px}.breadcrumb{font-size:10px}}
 @media(max-width:390px){.metrics{grid-template-columns:1fr 1fr}.metric-value{font-size:21px}.metric-top{font-size:9px}.category-row{grid-template-columns:78px 1fr 30px;gap:8px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
@@ -156,6 +161,7 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
   <div class="topline">
     <div class="breadcrumb">Workspace&nbsp; / &nbsp;<strong>Store overview</strong></div>
     <div class="top-actions">
+      <button class="button small" id="database-sync-button" type="button">Database: Local only</button>
       <button class="button small" id="refresh-button" type="button">↻&nbsp; Refresh</button>
       <a class="button primary small" href="https://app.pagescms.org/" target="_blank" rel="noopener">Edit products&nbsp; ↗</a>
       <div class="profile"><div class="avatar">O</div><div><strong>OUTFITI</strong><small>Store admin</small></div></div>
@@ -226,7 +232,7 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
         <button class="button primary" id="new-order-button" type="button">+ Log an order</button>
       </div>
     </div>
-    <div class="notice show local-storage-note">Orders are saved in this browser only. Export a backup to move or protect your order history.</div>
+    <div class="notice show local-storage-note">Orders are saved in this browser only until database sync is connected. Export a backup to protect your order history.</div>
     <div class="panel table-panel">
       <div class="table-toolbar">
         <h2>Order history <span id="orders-count" style="color:#78827c;font-weight:500"></span></h2>
@@ -248,6 +254,25 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
       </div>
     </div>
   </section>
+  <dialog id="database-dialog" class="order-dialog database-dialog">
+    <form id="database-form">
+      <div class="dialog-head"><div><h2>Database sync</h2><p>Connect this dashboard to your secured Supabase orders database.</p></div><button type="button" class="dialog-close" id="close-database-dialog" aria-label="Close">×</button></div>
+      <div class="form-grid">
+        <label>Supabase project URL<input id="database-url" type="url" required placeholder="https://your-project.supabase.co"></label>
+        <label>Supabase anon / publishable key<input id="database-key" type="password" required autocomplete="off" placeholder="Public project key"></label>
+        <label>Admin email<input id="database-email" type="email" required autocomplete="username"></label>
+        <label>Admin password<input id="database-password" type="password" required autocomplete="current-password"></label>
+      </div>
+      <p class="dialog-hint">Use an anon/publishable key only. Never put a service_role key in this browser. Create the admin user and run the secure SQL setup first.</p>
+      <p class="dialog-hint"><a href="supabase/README.md" target="_blank" rel="noopener">Open database setup guide ↗</a></p>
+      <div class="dialog-actions">
+        <button type="button" class="button" id="disconnect-database">Sign out</button>
+        <button type="button" class="button" id="cancel-database">Cancel</button>
+        <button type="submit" class="button primary">Sign in &amp; sync</button>
+      </div>
+      <p id="database-form-error" class="form-error" role="alert"></p>
+    </form>
+  </dialog>
   <dialog id="order-dialog" class="order-dialog">
     <form id="manual-order-form">
       <div class="dialog-head"><div><h2>Log a manual order</h2><p>Record an order received in person or through a sales channel.</p></div><button type="button" class="dialog-close" id="close-order-dialog" aria-label="Close">×</button></div>
@@ -269,6 +294,7 @@ footer{text-align:center;color:#656e68;font-size:10px;padding:23px 0 0}
   <footer>OUTFITI ADMIN STUDIO · Catalog data from content/products.json</footer>
 </main>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 "use strict";
 const PRODUCTS_URL=new URL("content/products.json",new URL(".",window.location.href));
@@ -276,7 +302,12 @@ let products=[];
 const ORDER_STORAGE_KEY="outfiti-admin-orders-v1";
 const ORDER_STATUSES=["new","confirmed","preparing","shipped","delivered","cancelled"];
 const ORDER_STATUS_LABELS={new:"New",confirmed:"Confirmed",preparing:"Preparing",shipped:"Shipped",delivered:"Delivered",cancelled:"Cancelled"};
+const DATABASE_CONFIG_KEY="outfiti-supabase-config-v1";
 let orders=readOrders();
+let databaseClient=null;
+let databaseUser=null;
+let databaseRealtimeChannel=null;
+let databaseSyncing=false;
 const money=value=>Number(value||0).toLocaleString("en-US")+" DH";
 const safe=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 function imageUrl(path){
@@ -405,10 +436,11 @@ function readOrders(){
 function saveOrders(){
   try{
     localStorage.setItem(ORDER_STORAGE_KEY,JSON.stringify(orders));
-    showOrderNotice("Orders are saved in this browser only. Export a backup to move or protect your order history.",false);
+    if(databaseClient&&databaseUser)showOrderNotice("Browser copy saved. Database sync is active.",false);
+    else showOrderNotice("Orders are saved in this browser only. Connect the database to sync across devices.",false);
     return true;
   }catch(error){
-    showOrderNotice("Could not save to this browser. Your current session still has the order data; export a backup now.",true);
+    showOrderNotice("Could not save a local backup. Keep this page open and check browser storage settings.",true);
     return false;
   }
 }
@@ -417,6 +449,144 @@ function showOrderNotice(message,isError){
   if(!note)return;
   note.textContent=message;
   note.classList.toggle("error-note",!!isError);
+}
+function setDatabaseState(label,state,message){
+  const button=document.getElementById("database-sync-button");
+  button.textContent="Database: "+label;
+  button.classList.toggle("database-state-online",state==="online");
+  button.classList.toggle("database-state-error",state==="error");
+  if(message)showOrderNotice(message,state==="error");
+}
+function readDatabaseConfig(){
+  try{return JSON.parse(localStorage.getItem(DATABASE_CONFIG_KEY)||"{}")}catch(error){return {}}
+}
+function storeDatabaseConfig(config){
+  try{localStorage.setItem(DATABASE_CONFIG_KEY,JSON.stringify(config));return true}
+  catch(error){return false}
+}
+function readPendingOrderIds(){
+  try{return JSON.parse(localStorage.getItem("outfiti-pending-order-sync-v1")||"[]")}catch(error){return []}
+}
+function writePendingOrderIds(ids){
+  try{localStorage.setItem("outfiti-pending-order-sync-v1",JSON.stringify([...new Set(ids)]))}catch(error){}
+}
+function createDatabaseClient(url,key){
+  if(!window.supabase||typeof window.supabase.createClient!=="function")throw new Error("Supabase client library did not load. Refresh and try again.");
+  return window.supabase.createClient(url,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+}
+function orderFromDatabase(row){
+  return {id:row.id,customer:row.customer,contact:row.contact||"",channel:row.channel||"Manual",status:row.status,createdAt:row.created_at,updatedAt:row.updated_at,deliveredAt:row.delivered_at,items:Array.isArray(row.items)?row.items:[],total:Number(row.total||0),grossProfit:Number(row.gross_profit||0)};
+}
+function orderToDatabase(order){
+  return {id:order.id,customer:order.customer,contact:order.contact||"",channel:order.channel||"Manual",status:order.status,created_at:order.createdAt,updated_at:order.updatedAt,delivered_at:order.deliveredAt||null,items:order.items,total:order.total,gross_profit:order.grossProfit};
+}
+async function upsertOrderToDatabase(order){
+  if(!databaseClient||!databaseUser)return false;
+  const {error}=await databaseClient.from("orders").upsert(orderToDatabase(order),{onConflict:"id"});
+  if(error)throw error;
+  return true;
+}
+async function syncOrdersFromDatabase(uploadLocal=true){
+  if(!databaseClient||!databaseUser||databaseSyncing)return;
+  databaseSyncing=true;
+  setDatabaseState("Syncing","online");
+  try{
+    const {data,error}=await databaseClient.from("orders").select("*").order("created_at",{ascending:false});
+    if(error)throw error;
+    const remote=(data||[]).map(orderFromDatabase);
+    const remoteIds=new Set(remote.map(order=>order.id));
+    if(uploadLocal){
+      const pendingIds=new Set(readPendingOrderIds());
+      for(const localOrder of orders){
+        if(!remoteIds.has(localOrder.id)||pendingIds.has(localOrder.id)){
+          await upsertOrderToDatabase(localOrder);
+          const existingIndex=remote.findIndex(order=>order.id===localOrder.id);
+          if(existingIndex>=0)remote[existingIndex]=localOrder;
+          else remote.push(localOrder);
+        }
+      }
+      writePendingOrderIds([]);
+    }
+    orders=remote.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+    localStorage.setItem(ORDER_STORAGE_KEY,JSON.stringify(orders));
+    renderOrders();
+    setDatabaseState("Synced","online","Orders are syncing with Supabase. The browser keeps a local cache for this device.");
+    setupDatabaseRealtime();
+  }catch(error){
+    setDatabaseState("Sync error","error","Database sync failed: "+(error.message||"Check the Supabase setup and admin permissions.")+" Local cached orders are still available.");
+    throw error;
+  }finally{databaseSyncing=false}
+}
+function setupDatabaseRealtime(){
+  if(!databaseClient||databaseRealtimeChannel)return;
+  databaseRealtimeChannel=databaseClient.channel("outfiti-orders-sync")
+    .on("postgres_changes",{event:"*",schema:"public",table:"orders"},()=>syncOrdersFromDatabase(false).catch(()=>{}))
+    .subscribe();
+}
+async function initializeDatabase(){
+  const config=readDatabaseConfig();
+  if(!config.url||!config.key){
+    setDatabaseState("Local only","local","Orders are stored in this browser. Add Supabase settings to enable cross-device sync.");
+    return;
+  }
+  try{
+    databaseClient=createDatabaseClient(config.url,config.key);
+    const {data,error}=await databaseClient.auth.getSession();
+    if(error)throw error;
+    if(!data.session){
+      setDatabaseState("Sign in required","local","Supabase is configured. Sign in as an authorized admin to sync orders.");
+      return;
+    }
+    databaseUser=data.session.user;
+    await syncOrdersFromDatabase(true);
+  }catch(error){
+    setDatabaseState("Sync error","error",error.message||"Could not initialize database sync.");
+  }
+}
+async function connectDatabase(event){
+  event.preventDefault();
+  const errorNode=document.getElementById("database-form-error");
+  errorNode.textContent="";
+  const url=document.getElementById("database-url").value.trim().replace(/\/$/,"");
+  const key=document.getElementById("database-key").value.trim();
+  const email=document.getElementById("database-email").value.trim();
+  const password=document.getElementById("database-password").value;
+  let parsedUrl;
+  try{parsedUrl=new URL(url)}catch(error){}
+  if(!parsedUrl||parsedUrl.protocol!=="https:"||parsedUrl.pathname!=="/"||!key||!email||!password){
+    errorNode.textContent="Enter an HTTPS Supabase project URL, anon/publishable key, admin email, and password.";return;
+  }
+  if(!storeDatabaseConfig({url,key})){
+    errorNode.textContent="Could not save the public project settings in this browser.";return;
+  }
+  try{
+    databaseClient=createDatabaseClient(url,key);
+    const {data,error}=await databaseClient.auth.signInWithPassword({email,password});
+    if(error)throw error;
+    databaseUser=data.user;
+    await syncOrdersFromDatabase(true);
+    document.getElementById("database-password").value="";
+    document.getElementById("database-dialog").close();
+  }catch(error){
+    errorNode.textContent=error.message||"Sign in or database sync failed. Check your admin account and database setup.";
+  }
+}
+async function disconnectDatabase(){
+  if(databaseRealtimeChannel&&databaseClient)await databaseClient.removeChannel(databaseRealtimeChannel);
+  databaseRealtimeChannel=null;
+  if(databaseClient)await databaseClient.auth.signOut();
+  databaseClient=null;databaseUser=null;
+  document.getElementById("database-password").value="";
+  setDatabaseState("Local only","local","Signed out. The browser copy remains available; connect again to sync.");
+}
+function openDatabaseDialog(){
+  const config=readDatabaseConfig();
+  document.getElementById("database-url").value=config.url||"";
+  document.getElementById("database-key").value=config.key||"";
+  document.getElementById("database-email").value=databaseUser?databaseUser.email||"":"";
+  document.getElementById("database-password").value="";
+  document.getElementById("database-form-error").textContent="";
+  document.getElementById("database-dialog").showModal();
 }
 function orderTotals(items){
   return items.reduce((total,item)=>({
@@ -463,6 +633,21 @@ function changeOrderStatus(orderId,status){
   if(status!=="delivered")delete order.deliveredAt;
   saveOrders();
   renderOrders();
+  void persistOrderToDatabase(order);
+}
+async function persistOrderToDatabase(order){
+  if(!databaseClient||!databaseUser){
+    if(readDatabaseConfig().url)writePendingOrderIds([...readPendingOrderIds(),order.id]);
+    return;
+  }
+  try{
+    await upsertOrderToDatabase(order);
+    writePendingOrderIds(readPendingOrderIds().filter(id=>id!==order.id));
+    setDatabaseState("Synced","online","Order changes are synced with Supabase and cached on this browser.");
+  }catch(error){
+    writePendingOrderIds([...readPendingOrderIds(),order.id]);
+    setDatabaseState("Sync error","error","Order is saved locally but could not sync: "+(error.message||"Check your connection."));
+  }
 }
 
 function orderProductOptions(selectedId){
@@ -552,6 +737,7 @@ function createOrder(event){
   saveOrders();
   renderOrders();
   document.getElementById("order-dialog").close();
+  void persistOrderToDatabase(order);
 }
 
 function exportOrders(){
@@ -570,9 +756,14 @@ async function importOrders(file){
     if(!window.confirm("Replace the orders saved in this browser with "+incoming.length+" imported orders?"))return;
     orders=incoming;
     saveOrders();
-    renderOrders();
-    showOrderNotice("Imported "+orders.length+" orders into this browser. Export a backup to move or protect your order history.",false);
-  }catch(error){showOrderNotice("That backup file could not be read. Choose an OUTFITI orders backup JSON file.",true)}
+    if(databaseClient&&databaseUser){
+      writePendingOrderIds(orders.map(order=>order.id));
+      for(const order of orders)await upsertOrderToDatabase(order);
+      writePendingOrderIds([]);
+      await syncOrdersFromDatabase(false);
+    }else renderOrders();
+    showOrderNotice("Imported "+orders.length+" orders into this browser"+(databaseUser?" and synced with Supabase.":"; connect the database to sync across devices."),false);
+  }catch(error){showOrderNotice("Backup import or database sync failed. The local copy is still available for recovery.",true)}
 }
 function setupOrderManagement(){
   document.getElementById("new-order-button").addEventListener("click",openOrderDialog);
@@ -593,8 +784,17 @@ document.getElementById("search-input").addEventListener("input",renderRows);
 document.getElementById("category-filter").addEventListener("change",renderRows);
 document.getElementById("stock-filter").addEventListener("change",renderRows);
 document.getElementById("export-button").addEventListener("click",exportCsv);
+document.getElementById("database-sync-button").addEventListener("click",()=>{
+  if(databaseClient&&databaseUser)syncOrdersFromDatabase(true).catch(()=>{});
+  else openDatabaseDialog();
+});
+document.getElementById("database-form").addEventListener("submit",connectDatabase);
+document.getElementById("close-database-dialog").addEventListener("click",()=>document.getElementById("database-dialog").close());
+document.getElementById("cancel-database").addEventListener("click",()=>document.getElementById("database-dialog").close());
+document.getElementById("disconnect-database").addEventListener("click",disconnectDatabase);
 setupOrderManagement();
 loadProducts();
+initializeDatabase();
 </script>
 </body>
 </html>
