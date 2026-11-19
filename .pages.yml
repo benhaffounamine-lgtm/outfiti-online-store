@@ -19,6 +19,18 @@ content:
         label: Price (DH)
         type: number
         required: true
+      - name: originalPrice
+        label: Original Price (DH)
+        type: number
+      - name: salePrice
+        label: Sale Price (DH)
+        type: number
+      - name: featured
+        label: Featured Product
+        type: boolean
+      - name: isNew
+        label: Mark as New
+        type: boolean
       - name: image
         label: Product Image
         type: image
