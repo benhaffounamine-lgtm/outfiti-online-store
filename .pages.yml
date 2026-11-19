@@ -58,3 +58,6 @@ content:
       - name: stock
         label: Stock Quantity
         type: number
+      - name: cost
+        label: Unit Cost (DH)
+        type: number
