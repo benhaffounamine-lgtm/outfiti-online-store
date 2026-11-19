@@ -247,6 +247,12 @@ footer p{color:#888;font-size:11px;line-height:2.3;margin-top:15px}
 }
 .details-image{min-height:450px;background:#1c1c1c}
 .details-image img{width:100%;height:100%;min-height:450px;object-fit:cover}
+.detail-gallery{display:flex;gap:9px;overflow-x:auto;padding:12px;background:#151515}
+.detail-gallery:empty{display:none}
+.detail-gallery button{flex:0 0 62px;width:62px;height:72px;padding:0;border:1px solid #444;background:#222;opacity:.72}
+.detail-gallery button.active{border-color:#d5c7ae;opacity:1}
+.detail-gallery img{width:100%;height:100%;object-fit:cover}
+.details-image .detail-gallery img{height:100%;min-height:0}
 .details-content{padding:40px 30px}
 .details-close{
   position:absolute;right:15px;top:12px;
@@ -449,6 +455,7 @@ footer p{color:#888;font-size:11px;line-height:2.3;margin-top:15px}
     <button class="details-close" onclick="closeProduct()">×</button>
     <div class="details-image">
       <img id="detail-image" src="" alt="Product">
+      <div class="detail-gallery" id="detail-gallery" aria-label="Additional product images"></div>
     </div>
     <div class="details-content">
       <small>OUTFITI ORIGINAL COLLECTION</small>
@@ -531,7 +538,8 @@ function normalizeProducts(items){
         id,name:item.name,price:Number(item.price),description:String(item.description||""),
         category:String(item.category||"Collection"),sizes:Array.isArray(item.sizes)?item.sizes.map(String):[],
         colors:(colors.length?colors:[{name:"Default",hex:"#777777",image:item.image||""}]).map(c=>({...c,image:resolveProductImage(c.image||item.image||"")})),
-        image,stock:item.stock==null?999:Math.max(0,Number(item.stock)||0),label:String(item.label||item.category||"OUTFITI ORIGINAL")
+        image,gallery:(Array.isArray(item.gallery)?item.gallery:[]).filter(path=>typeof path==="string"&&path.trim()).slice(0,6).map(resolveProductImage),
+        stock:item.stock==null?999:Math.max(0,Number(item.stock)||0),label:String(item.label||item.category||"OUTFITI ORIGINAL")
       };
     });
 }
@@ -613,8 +621,27 @@ function openProduct(id){
     button.addEventListener("click",()=>selectColor(Number(button.dataset.colorIndex))));
 
   updateSelectedColor();
+  renderProductGallery();
   document.getElementById("details-overlay").classList.add("open");
   document.body.classList.add("modal-open");
+}
+
+function renderProductGallery(){
+  const gallery=document.getElementById("detail-gallery");
+  gallery.innerHTML=currentProduct.gallery.map((image,index)=>
+    `<button type="button" class="${index===0?"active":""}" data-gallery-index="${index}" aria-label="View product image ${index+1}" aria-pressed="${index===0}">
+      <img src="${escapeHtml(image)}" alt="${escapeHtml(currentProduct.name)} image ${index+1}" loading="lazy">
+    </button>`
+  ).join("");
+  gallery.querySelectorAll("button").forEach((button,index)=>{
+    button.addEventListener("click",()=>{
+      document.getElementById("detail-image").src=currentProduct.gallery[index];
+      gallery.querySelectorAll("button").forEach((thumbnail,i)=>{
+        thumbnail.classList.toggle("active",i===index);
+        thumbnail.setAttribute("aria-pressed",String(i===index));
+      });
+    });
+  });
 }
 
 function selectSize(size,button){
