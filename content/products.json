@@ -4,9 +4,17 @@
     "name": "capche crop",
     "price": 249,
     "image": "/media/WhatsApp Image 2026-11-19 at 16.14.13.jpeg",
+    "description": "hoodie crop oversize streetwear",
     "category": "Hoodie",
     "sizes": [
-      "s"
-    ]
+      "s",
+      "m",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "red"
+    ],
+    "stock": 4
   }
 ]
