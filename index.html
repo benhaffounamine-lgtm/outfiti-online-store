@@ -6,9 +6,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OUTFITI | Beyond Fashion</title>
 <meta name="description" content="OUTFITI — Premium Streetwear from Kenitra, Morocco.">
+<meta name="theme-color" content="#080808">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OUTFITI">
+<meta property="og:title" content="OUTFITI | Premium Streetwear">
+<meta property="og:description" content="Own your street. Discover premium streetwear from Kenitra, Morocco.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=1200">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OUTFITI | Premium Streetwear">
+<meta name="twitter:description" content="Own your street. Discover premium streetwear from Kenitra, Morocco.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=1200">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ClothingStore","name":"OUTFITI","description":"Premium streetwear from Kenitra, Morocco.","address":{"@type":"PostalAddress","addressLocality":"Kenitra","addressCountry":"MA"},"telephone":"+212613163038"}
+</script>
 
 <style>
 :root{
@@ -189,14 +203,25 @@ nav a:hover{color:var(--gold)}
   width:100%;height:100%;object-fit:cover;transition:transform .7s;
 }
 .product:hover .product-image img{transform:scale(1.08)}
-.product-label{
-  position:absolute;top:15px;left:15px;z-index:1;
-  background:#d1c4ae;color:#000;padding:7px 10px;
-  font-size:8px;font-weight:900;letter-spacing:2px;
-}
+ .product-badges{position:absolute;top:12px;left:12px;right:12px;z-index:2;display:flex;gap:6px;flex-wrap:wrap}
+.product-badge{padding:6px 8px;font-size:8px;font-weight:900;letter-spacing:1.5px;background:#d1c4ae;color:#080808}
+.product-badge.new{background:#f5f3ee}
+.product-badge.sale{background:#b9a17c}
+.product-badge.sold-out{background:#333;color:#fff}
+.product-badge.featured{background:#fff}
 .product-info{padding:20px}
 .product-info h3{font-size:13px;font-weight:700;margin-bottom:10px}
-.price{color:var(--gold);font-size:14px;font-weight:900}
+.price{color:var(--gold);font-size:14px;font-weight:900;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.price-original{color:#888;text-decoration:line-through;font-size:12px;font-weight:500}
+.price-discount{color:#e6c99a;font-size:10px;letter-spacing:.5px}
+.products-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:-20px 0 30px}
+.products-toolbar p{color:#777;font-size:10px;letter-spacing:2px}
+.products-toolbar label{display:flex;align-items:center;gap:9px;color:#aaa;font-size:9px;letter-spacing:1.5px}
+.products-toolbar select{background:#151515;color:#f5f3ee;border:1px solid #555;padding:10px 12px;font:inherit;letter-spacing:1px}
+.featured-section{margin:0 0 38px}
+.featured-section h3{font-size:11px;letter-spacing:3px;color:var(--gold);margin-bottom:14px}
+.featured-products{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.add-button:disabled,.details-add:disabled{opacity:.45;cursor:not-allowed}
 .add-button{
   width:100%;margin-top:18px;padding:14px;background:transparent;
   color:white;border:1px solid #ffffff40;font-size:9px;
@@ -261,7 +286,8 @@ footer p{color:#888;font-size:11px;line-height:2.3;margin-top:15px}
 .details-content small{color:var(--gold);font-size:9px;letter-spacing:3px}
 .details-content h2{font-size:30px;margin:15px 0}
 .details-description{color:#999;font-size:12px;line-height:1.8;margin-bottom:22px}
-.details-price{color:var(--gold);font-size:22px;font-weight:900;margin-bottom:25px}
+.details-price{color:var(--gold);font-size:22px;font-weight:900;margin-bottom:8px}
+.availability{color:#aaa;font-size:10px;letter-spacing:2px;margin-bottom:22px}
 .option-title{font-size:10px;letter-spacing:2px;font-weight:800;margin:20px 0 12px}
 .size-options,.color-options{display:flex;gap:9px;flex-wrap:wrap}
 .size-option{
@@ -335,7 +361,13 @@ footer p{color:#888;font-size:11px;line-height:2.3;margin-top:15px}
   .categories{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:550px){
-  header{min-height:72px;flex-wrap:wrap;padding:12px 5%}
+  header{min-height:72px;flex-wrap:wrap;padding:12px 5%;gap:8px}
+  .cart-button{padding:11px 12px;font-size:9px}
+  nav{gap:18px}
+  .products-toolbar{align-items:flex-start;flex-direction:column;margin:-15px 0 22px}
+  .products-toolbar label{width:100%;justify-content:space-between}
+  .products-toolbar select{flex:1;max-width:65%}
+  .featured-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .logo{font-size:29px}
   nav{order:3;width:100%;overflow-x:auto;padding:15px 0 5px}
   .hero{min-height:530px;padding:65px 7%}
@@ -345,9 +377,15 @@ footer p{color:#888;font-size:11px;line-height:2.3;margin-top:15px}
   .section-head{align-items:start}
   .section-head p{display:none}
   .section-head h2{letter-spacing:-2px}
-  .product-image{height:200px}
-  .product-info{padding:13px 10px}
-  .product-info h3{font-size:11px}
+  .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .product-image{height:clamp(145px,48vw,210px)}
+  .product-info{padding:12px 9px}
+  .product-info h3{font-size:11px;line-height:1.4}
+  .product-badges{top:7px;left:7px;right:7px;gap:4px}
+  .product-badge{padding:5px 6px;font-size:7px}
+  .details-box{max-height:94vh}
+  .details-image,.details-image img{min-height:220px;height:220px}
+  .detail-gallery button{flex-basis:54px;width:54px;height:62px}
   .add-button{font-size:8px;padding:12px 5px}
   .brand-message{padding:75px 15px}
   .brand-message h2{letter-spacing:-3px}
@@ -355,6 +393,13 @@ footer p{color:#888;font-size:11px;line-height:2.3;margin-top:15px}
   .details-image,.details-image img{min-height:260px;height:260px}
   .details-content{padding:25px 20px}
   .details-content h2{font-size:24px}
+}
+@media(max-width:360px){
+  .products,.featured-products{grid-template-columns:1fr}
+  .product-image{height:260px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
@@ -423,6 +468,20 @@ footer p{color:#888;font-size:11px;line-height:2.3;margin-top:15px}
     <p>SELECT YOUR NEXT LOOK.</p>
   </div>
 
+  <div class="products-toolbar">
+    <p>SELECT YOUR NEXT LOOK.</p>
+    <label for="product-sort">SORT BY
+      <select id="product-sort">
+        <option value="featured">Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+      </select>
+    </label>
+  </div>
+  <div class="featured-section" id="featured-section" hidden>
+    <h3>FEATURED PRODUCTS</h3>
+    <div class="products featured-products" id="featured-products"></div>
+  </div>
   <div class="products" id="products-grid" aria-live="polite"></div>
   <p id="products-empty" class="empty" hidden>No products are available right now.</p>
   <p id="products-error" class="empty" hidden>Showing our classic collection while the latest products load.</p>
@@ -461,7 +520,8 @@ footer p{color:#888;font-size:11px;line-height:2.3;margin-top:15px}
       <small>OUTFITI ORIGINAL COLLECTION</small>
       <h2 id="detail-name">PRODUCT NAME</h2>
       <p class="details-description" id="detail-description"></p>
-      <div class="details-price" id="detail-price"></div>
+      <div class="details-price price" id="detail-price"></div>
+      <p class="availability" id="detail-availability"></p>
 
       <div class="option-title">SELECT SIZE</div>
       <div class="size-options" id="size-options"></div>
@@ -501,7 +561,7 @@ footer p{color:#888;font-size:11px;line-height:2.3;margin-top:15px}
 <script>
 /* PRODUCT DATA */
 const fallbackProducts = [
-  {id:"hoodie",name:"Oversize Hoodie",price:170,description:"Premium streetwear hoodie. Designed for comfort and a relaxed oversized fit.",category:"Hoodies",sizes:["S","M","L","XL","XXL"],colors:[
+  {id:"hoodie",name:"Oversize Hoodie",price:170,featured:true,description:"Premium streetwear hoodie. Designed for comfort and a relaxed oversized fit.",category:"Hoodies",sizes:["S","M","L","XL","XXL"],colors:[
     {name:"Black",hex:"#111111",image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=900"},
     {name:"Grey",hex:"#888888",image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=900&sat=-100"},
     {name:"Beige",hex:"#c5ad8c",image:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=900&sat=-50"}],stock:999,label:"BESTSELLER"},
@@ -509,7 +569,7 @@ const fallbackProducts = [
     {name:"Blue",hex:"#244b78",image:"https://images.unsplash.com/photo-1542272604-787c3835535d?w=900"},
     {name:"Black",hex:"#111111",image:"https://images.unsplash.com/photo-1542272604-787c3835535d?w=900&sat=-100"},
     {name:"Grey",hex:"#888888",image:"https://images.unsplash.com/photo-1542272604-787c3835535d?w=900&sat=-70"}],stock:999,label:"STREET ESSENTIAL"},
-  {id:"tshirt",name:"Oversize T-Shirt",price:120,description:"Minimal oversized T-shirt with a relaxed streetwear silhouette.",category:"T-Shirts",sizes:["S","M","L","XL","XXL"],colors:[
+  {id:"tshirt",name:"Oversize T-Shirt",price:120,featured:true,isNew:true,description:"Minimal oversized T-shirt with a relaxed streetwear silhouette.",category:"T-Shirts",sizes:["S","M","L","XL","XXL"],colors:[
     {name:"White",hex:"#eeeeee",image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=900"},
     {name:"Black",hex:"#111111",image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=900&sat=-100"},
     {name:"Beige",hex:"#c5ad8c",image:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=900&sat=-50"}],stock:999,label:"NEW ARRIVAL"},
@@ -534,8 +594,16 @@ function normalizeProducts(items){
         return null;
       }).filter(Boolean);
       const image=resolveProductImage(item.image|| (colors[0]&&colors[0].image)||"");
+      const basePrice=Number(item.price);
+      const salePrice=Number(item.salePrice);
+      const currentPrice=Number.isFinite(salePrice)&&salePrice>0?salePrice:basePrice;
+      const suppliedOriginal=Number(item.originalPrice);
+      const originalPrice=Number.isFinite(suppliedOriginal)&&suppliedOriginal>currentPrice?suppliedOriginal:
+        (Number.isFinite(salePrice)&&salePrice>0&&basePrice>currentPrice?basePrice:null);
       return {
-        id,name:item.name,price:Number(item.price),description:String(item.description||""),
+        id,name:item.name,price:currentPrice,originalPrice,
+        featured:item.featured===true,isNew:item.isNew===true||/^new\b/i.test(String(item.label||"")),
+        description:String(item.description||""),
         category:String(item.category||"Collection"),sizes:Array.isArray(item.sizes)?item.sizes.map(String):[],
         colors:(colors.length?colors:[{name:"Default",hex:"#777777",image:item.image||""}]).map(c=>({...c,image:resolveProductImage(c.image||item.image||"")})),
         image,gallery:(Array.isArray(item.gallery)?item.gallery:[]).filter(path=>typeof path==="string"&&path.trim()).slice(0,6).map(resolveProductImage),
@@ -550,33 +618,57 @@ function resolveProductImage(path){
   return new URL(path.replace(/^\.\//,"").replace(/^\/+/,""),base).href;
 }
 let productsData=Object.fromEntries(fallbackProducts.map(product=>[product.id,product]));
-function renderProducts(){
-  const grid=document.getElementById("products-grid");
-  const empty=document.getElementById("products-empty");
-  empty.hidden=Object.keys(productsData).length>0;
-  grid.innerHTML=Object.values(productsData).map(product=>`
-    <article class="product" data-product-id="${escapeHtml(product.id)}" tabindex="0" role="button" aria-label="View ${escapeHtml(product.name)}">
-      <div class="product-image">
-        <span class="product-label">${escapeHtml(product.label)}</span>
-        <img src="${escapeHtml(product.image||product.colors[0].image)}" alt="${escapeHtml(product.name)}" loading="lazy">
-      </div>
-      <div class="product-info">
-        <h3>${escapeHtml(product.name)}</h3><div class="price">${formatPrice(product.price)}</div>
-        <p class="details-description">${escapeHtml(product.category)} · ${product.stock>0?product.stock+" IN STOCK":"SOLD OUT"}</p>
-        <button class="add-button" ${product.stock<=0?"disabled":""}>VIEW DETAILS +</button>
-      </div>
-    </article>`).join("");
+let productSort="featured";
+function getSortedProducts(products){
+  return [...products].sort((a,b)=>{
+    if(productSort==="price-asc") return a.price-b.price||a.name.localeCompare(b.name);
+    if(productSort==="price-desc") return b.price-a.price||a.name.localeCompare(b.name);
+    return Number(b.featured)-Number(a.featured)||a.name.localeCompare(b.name);
+  });
+}
+function productBadges(product){
+  const badges=[];
+  if(product.stock<=0) badges.push('<span class="product-badge sold-out">SOLD OUT</span>');
+  if(product.isNew) badges.push('<span class="product-badge new">NEW</span>');
+  if(product.originalPrice&&product.originalPrice>product.price) badges.push('<span class="product-badge sale">SALE</span>');
+  if(product.featured) badges.push('<span class="product-badge featured">FEATURED</span>');
+  return badges.join("");
+}
+function formatProductPrice(product){
+  const current='<span class="price-current">'+formatPrice(product.price)+'</span>';
+  if(!product.originalPrice||product.originalPrice<=product.price) return current;
+  const percent=Math.round((1-product.price/product.originalPrice)*100);
+  return '<span class="price-original">'+formatPrice(product.originalPrice)+'</span>'+current+'<span class="price-discount">'+percent+'% OFF</span>';
+}
+function renderProductCards(grid,products){
+  grid.innerHTML=products.map(product=>
+    '<article class="product" data-product-id="'+escapeHtml(product.id)+'" tabindex="0" role="button" aria-label="View '+escapeHtml(product.name)+'">'+
+      '<div class="product-image"><div class="product-badges">'+productBadges(product)+'</div>'+
+        '<img src="'+escapeHtml(product.image||product.colors[0].image)+'" alt="'+escapeHtml(product.name)+'" loading="lazy"></div>'+
+      '<div class="product-info"><h3>'+escapeHtml(product.name)+'</h3><div class="price">'+formatProductPrice(product)+'</div>'+
+        '<p class="details-description">'+escapeHtml(product.category)+' · '+(product.stock>0?product.stock+' IN STOCK':'SOLD OUT')+'</p>'+
+        '<button class="add-button" '+(product.stock<=0?'disabled':'')+'>'+(product.stock<=0?'SOLD OUT':'VIEW DETAILS +')+'</button></div></article>'
+  ).join("");
   grid.querySelectorAll(".product").forEach(card=>{
     const open=()=>openProduct(card.dataset.productId);
     card.addEventListener("click",open);
-    card.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" ") {event.preventDefault();open();}});
+    card.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();open();}});
     card.querySelector("button").addEventListener("click",event=>{event.stopPropagation();if(!event.currentTarget.disabled)open();});
   });
+}
+function renderProducts(){
+  const allProducts=Object.values(productsData);
+  const sorted=getSortedProducts(allProducts);
+  const featured=sorted.filter(product=>product.featured);
+  document.getElementById("products-empty").hidden=allProducts.length>0;
+  document.getElementById("featured-section").hidden=featured.length===0;
+  renderProductCards(document.getElementById("featured-products"),featured);
+  renderProductCards(document.getElementById("products-grid"),sorted);
 }
 function escapeHtml(value){
   return String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 }
-function formatPrice(price){return price+" DH";}
+function formatPrice(price){return Number(price).toLocaleString("en-US")+" DH";}
 async function loadProducts(){
   try{
     const response=await fetch(new URL("content/products.json",new URL(".",window.location.href)),{cache:"no-store"});
@@ -603,7 +695,10 @@ function openProduct(id){
   selectedQuantity=1;
 
   document.getElementById("detail-name").textContent=currentProduct.name;
-  document.getElementById("detail-price").textContent=currentProduct.price+" DH";
+  document.getElementById("detail-price").innerHTML=formatProductPrice(currentProduct);
+  document.getElementById("detail-availability").textContent=currentProduct.stock>0?currentProduct.stock+" IN STOCK":"SOLD OUT";
+  document.querySelector(".details-add").disabled=currentProduct.stock<=0;
+  document.querySelector(".details-add").textContent=currentProduct.stock>0?"ADD TO BAG →":"SOLD OUT";
   document.getElementById("detail-description").textContent=currentProduct.description;
   document.getElementById("detail-quantity").textContent="1";
   document.getElementById("details-error").textContent="";
@@ -620,7 +715,8 @@ function openProduct(id){
   document.querySelectorAll("#color-options .color-option").forEach(button=>
     button.addEventListener("click",()=>selectColor(Number(button.dataset.colorIndex))));
 
-  updateSelectedColor();
+  updateSelectedColor(false);
+  document.getElementById("detail-image").alt=currentProduct.name;
   renderProductGallery();
   document.getElementById("details-overlay").classList.add("open");
   document.body.classList.add("modal-open");
@@ -659,9 +755,14 @@ function selectColor(index){
   updateSelectedColor();
 }
 
-function updateSelectedColor(){
-  document.getElementById("detail-image").src=selectedColor.image||currentProduct.image;
+function updateSelectedColor(useVariantImage=true){
+  const image=useVariantImage&&selectedColor.image?selectedColor.image:(currentProduct.image||selectedColor.image);
+  document.getElementById("detail-image").src=image;
   document.getElementById("selected-color").textContent="COLOR: "+selectedColor.name;
+  if(useVariantImage) document.querySelectorAll("#detail-gallery button").forEach(button=>{
+    button.classList.remove("active");
+    button.setAttribute("aria-pressed","false");
+  });
 }
 
 function changeQuantity(amount){
@@ -678,12 +779,14 @@ function addSelectedProduct(){
     document.getElementById("details-error").textContent="Please select a size first.";
     return;
   }
-  if(selectedQuantity>currentProduct.stock){
-    document.getElementById("details-error").textContent="Only "+currentProduct.stock+" available.";
+  const alreadyInCart=cart.filter(item=>item.productId===currentProduct.id).reduce((total,item)=>total+item.quantity,0);
+  if(alreadyInCart+selectedQuantity>currentProduct.stock){
+    document.getElementById("details-error").textContent="Only "+Math.max(0,currentProduct.stock-alreadyInCart)+" more available.";
     return;
   }
 
   cart.push({
+    productId:currentProduct.id,
     name:currentProduct.name,
     price:currentProduct.price,
     size:selectedSize,
@@ -790,6 +893,10 @@ document.addEventListener("keydown",event=>{
 });
 
 updateCart();
+document.getElementById("product-sort").addEventListener("change",event=>{
+  productSort=event.target.value;
+  renderProducts();
+});
 loadProducts();
 </script>
 
